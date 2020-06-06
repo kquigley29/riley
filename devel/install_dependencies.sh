@@ -2,8 +2,8 @@
 
 echo "Setting up required packages and libraries..."
 
-# Change to riley directory
-cd find
+# Make sure the script is working in the correct directory
+pwd >> current_directory
 
 # Clone OpenNN repo for network tools
 echo "Checking for opennn..."
@@ -24,4 +24,3 @@ else
   git clone https://github.com/opencv/opencv.git
   echo "opencv cloned."
 fi
-
