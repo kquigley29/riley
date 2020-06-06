@@ -4,10 +4,9 @@ project(riley)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(src)
-add_subdirectory(build)
-add_subdirectory(dep)
+add_subdirectory(opencv)
+add_subdirectory(opennn)
 
 include_directories(
-        src
-        dep)
+        opencv
+        opennn)

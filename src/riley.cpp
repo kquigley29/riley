@@ -6,7 +6,8 @@
 #include <iostream>
 
 // Header includes
-#include <network.h>
+#include "network/network.h"
+#include "video/video.h"
 
 
 // Namespaces

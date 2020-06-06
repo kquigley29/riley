@@ -8,7 +8,7 @@
 #include <iostream>
 
 // OpenNN includes
-#include "../opennn/opennn/opennn.h"
+#include "../../dep/opennn/opennn/opennn.h"
 
 
 #ifndef RILEY_NETWORK_H
