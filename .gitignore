@@ -1,0 +1,16 @@
+# IDE made files/folders
+.idea
+.vscode
+
+# development directories
+cmake-build-debug
+venv
+
+# open source directories
+opennn
+
+# auto-compiled files/folders
+__pycache__
+
+# videos
+*.mp4
