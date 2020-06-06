@@ -1,5 +1,5 @@
 // ---------------
-// -- R I L E Y --
+// == R I L E Y ==
 // ---------------
 
 // System includes
@@ -15,8 +15,8 @@ using namespace RileyNetworkParams;
 
 int main() 
 {
-    std::cout << "Yessir." << std::endl
-              << "Let's GOOOOO" << std::endl;
+    std::cout << "Yessir."       << std::endl
+              << "Let's GOOOOO!" << std::endl;
 
     return 0;
 }
