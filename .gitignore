@@ -9,6 +9,7 @@ venv
 # open source directories
 opennn
 opencv
+opencv_contrib
 darknet
 
 # auto-compiled files/folders
