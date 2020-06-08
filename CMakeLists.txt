@@ -1,13 +1,13 @@
+# Root CMake file
+
 cmake_minimum_required(VERSION 3.15)
-
 project(riley)
-
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(src)
-add_subdirectory(build)
-add_subdirectory(dep)
-
 include_directories(
         src
-        dep)
+        )
+
+
+add_executable(riley src/riley.cpp)

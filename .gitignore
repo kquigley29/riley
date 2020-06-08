@@ -7,8 +7,9 @@ cmake-build-debug
 venv
 
 # open source directories
-dep/opennn
-dep/opencv
+opennn
+opencv
+darknet
 
 # auto-compiled files/folders
 __pycache__

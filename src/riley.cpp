@@ -4,20 +4,23 @@
 
 // System includes
 #include <iostream>
+#include <cmath>
 
 // Header includes
-#include "network/network.h"
-#include "video/video.h"
-
+/* Currently none */
 
 // Namespaces
-using namespace RileyNetworkParams;
+/* Currently none */
 
-
-int main() 
+int main(int argc, char** argv)
 {
     std::cout << "Yessir."       << std::endl
               << "Let's GOOOOO!" << std::endl;
+
+    for (int i=0; i<argc; i++)
+    {
+        std::cout << argv[i] << std::endl;
+    }
 
     return 0;
 }

@@ -1,28 +1,7 @@
-# Installs the files required (opennn and opencv)
-echo "Setting up required packages and libraries...\n"
+# Install required repos (opennn, opencv and darknet)
 
-# Clone OpenNN repo for network tools
-echo "Checking for opennn..."
-if [ -d "dep/opennn" ]; then
-  echo "opennn exists.\n"
-else
-  (
-    cd dep
-    echo "opennn does not exist. Cloning from https://github.com/Artelnics/opennn.git..."
-    git clone https://github.com/Artelnics/opennn.git
-    echo "opennn cloned.\n"
-  )
-fi
+source devel/installopennn.sh
+source devel/install_opencv.sh
+source devel/install_darknet.sh
 
-# Clone OpenCV repo for computer vision tools
-echo "Checking for opencv..."
-if [ -d "dep/opencv" ]; then
-  echo "opencv exists.\n"
-else
-  (
-    cd dep
-    echo "opencv does not exist. Cloning from https://github.com/opencv/opencv.git..."
-    git clone https://github.com/opencv/opencv.git
-    echo "opencv cloned.\n"
-  )
-fi
+
