@@ -1,6 +1,9 @@
 # Install required packages and libraries for python
 # And setup the virtual environment
 
+# Install pip3
+sudo apt install python3-pip
+
 # Install virtualenv
 pip3 install virtualenv
 
