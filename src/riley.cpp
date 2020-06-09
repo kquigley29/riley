@@ -1,6 +1,13 @@
-// ---------------
+// ===============
 // == R I L E Y ==
-// ---------------
+// ===============
+
+
+// =======================================================================================================
+// Compile command
+// g++ src/riley.cpp src/data_process/VideoProcessor.cpp -o riley.exe `pkg-config opencv4 --cflags --libs`
+//========================================================================================================
+
 
 // System includes
 #include <iostream>
@@ -17,6 +24,8 @@ int main(int argc, char** argv)
 {
     std::cout << "Yessir."       << std::endl
               << "Let's GOOOOO!" << std::endl;
+
+    std::cout << "argc = " << argc << std::endl;
 
     if (argc == 1)
     {

@@ -1,7 +1,7 @@
-// ====================================
-// VideoProcessor cpp file
-// Calculate pixel luma of passed video
-// ====================================
+// ============================
+// VideoProcessor Source File
+// Process video data into luma
+// ============================
 
 
 // Includes
