@@ -4,10 +4,11 @@
 
 // System includes
 #include <iostream>
+#include <string>
 #include <cmath>
 
 // Header includes
-/* Currently none */
+#include "data_process/process.h"
 
 // Namespaces
 /* Currently none */
@@ -17,9 +18,15 @@ int main(int argc, char** argv)
     std::cout << "Yessir."       << std::endl
               << "Let's GOOOOO!" << std::endl;
 
-    for (int i=0; i<argc; i++)
+    std::string method = argv[1];
+    std::string argument = argv[2];
+
+
+    // If the method is process, use process function found in
+    // riley/src/data_process/process.h
+    if (method == "process")
     {
-        std::cout << argv[i] << std::endl;
+        Data::process(argument);
     }
 
     return 0;

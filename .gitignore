@@ -15,5 +15,6 @@ darknet
 # auto-compiled files/folders
 __pycache__
 
-# videos
+# videos and video data files
 *.mp4
+*.txt
