@@ -18,3 +18,6 @@ __pycache__
 # videos and video data files
 *.mp4
 *.txt
+
+# executables
+*.exe
