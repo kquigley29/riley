@@ -1,7 +1,6 @@
 # venv/bin/python3
 
 import cv2
-import numpy as np
 
 name = input("Video name: ")
 video_path = "/home/riley/Projects/riley/data/videos/" + name + ".mp4"
