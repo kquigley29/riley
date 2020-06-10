@@ -8,15 +8,23 @@ venv
 
 # open source directories
 opennn
-opencv
-opencv_contrib
-darknet
+darknet/examples
+darknet/obj
+darknet/python
+darknet/results
+darknet/LICENSE*
+darknet/*.weights
+darknet/*.a
+darknet/*.so
+darknet/darknet
 
 # auto-compiled files/folders
 __pycache__
 
-# videos and video data files
+# videos and images
 *.mp4
+*.jpg
+*.jpeg
 
 # executables
 *.exe
