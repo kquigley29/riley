@@ -15,7 +15,7 @@
 #include <cmath>
 
 // Header includes
-#include "data_process/VideoProcessor.h"
+#include "data_process/include/VideoProcessor.h"
 
 // Namespaces
 /* Currently none */

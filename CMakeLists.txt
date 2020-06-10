@@ -10,7 +10,7 @@ add_subdirectory(src)
 
 add_executable(riley
         src/riley.cpp
-        src/data_process/VideoProcessor.cpp
+        src/data_process/src/VideoProcessor.cpp
         )
 
 target_link_libraries(riley ${OpenCV_LIBS})

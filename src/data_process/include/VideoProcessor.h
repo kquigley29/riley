@@ -9,6 +9,8 @@
 #include <opencv2/videoio.hpp>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <cmath>
 
 
 class VideoProcessor
