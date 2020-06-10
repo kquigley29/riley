@@ -25,29 +25,39 @@ int main(int argc, char** argv)
     std::cout << "Yessir."       << std::endl
               << "Let's GOOOOO!" << std::endl;
 
-    std::cout << "argc = " << argc << std::endl;
+    std::string invalid_args {"Invalid arguments!"};
 
     if (argc == 1)
     {
-        std::cout << ":(" << std::endl;
+        std::cout << invalid_args << std::endl;
     }
 
-    if (argc == 2)
+    else if (argc == 2)
     {
-        std::cout << ":(" << std::endl;
+        std::cout << invalid_args << std::endl;
     }
 
-    if (argc == 3)
+    else if (argc == 3)
     {
-        std::string method = argv[1];
-        std::string argument = argv[2];
+        std::string arg1 {argv[1]};
+        std::string arg2 (argv[2]);
 
-
-        // If the method is process, use process function found in
-        // riley/src/data_process/process.h
-        if (method == "process") {
-            VideoProcessor process(argument);
+        // If arg1 (method) is process, use VideoProcess class
+        // found in riley/src/data_process/VideoProcess.cpp
+        if (arg1 == "process")
+        {
+            VideoProcessor process(arg2);
         }
+
+        else
+        {
+            std::cout << invalid_args << std::endl;
+        }
+    }
+
+    else
+    {
+        std::cout << invalid_args << std::endl;
     }
 
     return 0;
