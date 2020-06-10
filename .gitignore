@@ -8,15 +8,15 @@ venv
 
 # open source directories
 opennn
-darknet/examples
-darknet/obj
-darknet/python
-darknet/results
-darknet/LICENSE*
-darknet/*.weights
-darknet/*.a
-darknet/*.so
-darknet/darknet
+src/darknet/examples
+src/darknet/obj
+src/darknet/python
+src/darknet/results
+src/darknet/LICENSE*
+src/darknet/*.weights
+src/darknet/*.a
+src/darknet/*.so
+src/darknet/darknet
 
 # auto-compiled files/folders
 __pycache__
@@ -25,6 +25,7 @@ __pycache__
 *.mp4
 *.jpg
 *.jpeg
+*.png
 
 # executables
 *.exe
