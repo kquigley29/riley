@@ -17,6 +17,7 @@ src/darknet/*.weights
 src/darknet/*.a
 src/darknet/*.so
 src/darknet/darknet
+src/darknet/data
 
 # auto-compiled files/folders
 __pycache__
