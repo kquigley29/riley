@@ -11,24 +11,30 @@
 // VideoProcessor constructor
 VideoProcessor::VideoProcessor(const cv::String& name)
 {
-    // Get the video and data file locations and names
-    cv::String video_path = "/home/riley/Projects/riley/data/videos/" + name + ".mp4";
-    cv::String data_path = "/home/riley/Projects/riley/data/store/" + name + ".txt";
+    // Get the file name
+    file_name = name;
+    video_path = "/home/riley/Projects/riley/data/videos/" + name + ".mp4";
+    data_path = "/home/riley/Projects/riley/data/store/" + name + ".txt";
+}
 
+
+// Get the luma values from the video and
+// store in the luma_data vector
+void VideoProcessor::process()
+{
     // Capture the video
     cv::VideoCapture capture(video_path);
 
     // Declare the frame matrix and boolean of if the frame exists
     // Retrieve the first frame
-    // declare frame count and string stream to store the luma values
+    // declare frame count
     cv::Mat frame;
     bool okay;
     okay = capture.read(frame);
     int frame_count = 0;
-    std::stringstream lumas;
 
     // While there is a frame in the video
-    while (okay) {
+    while (okay && frame_count < 20) {
 
         // Print the frame count
         std::cout << "Frame: " << frame_count << "\n";
@@ -44,10 +50,10 @@ VideoProcessor::VideoProcessor(const cv::String& name)
                 // Normalise the luma and round to 4 decimal places
                 cv::Vec3b pixel = Mi[j];
                 double luma = 0.2126 * pixel[0] + 0.7152 * pixel[1] + 0.0722 * pixel[2];
-                luma = round(luma * 10000.0) / 10000.0;
+                luma = round(luma * 1000.0) / 1000.0;
 
-                // Add luma value to lumas string stream
-                lumas << luma << ",";
+                // Add luma value to lumas_data vector
+                luma_data.push_back(luma);
 
             }
         }
@@ -59,8 +65,20 @@ VideoProcessor::VideoProcessor(const cv::String& name)
     // Add data to the specified file
     std::ofstream data;
     data.open(data_path);
-    data << lumas.str();
+    for (int i = 0; i < luma_data.size(); i++)
+    {
+        data << luma_data[i] << ",";
+    }
     data.close();
-
 }
 
+
+// Returns luma vector
+        std::vector<double> VideoProcessor::get_luma()
+{
+    return luma_data;
+}
+
+
+// Define a trivial destructor with 'default'
+VideoProcessor::~VideoProcessor() = default;

@@ -46,7 +46,8 @@ int main(int argc, char** argv)
         // found in riley/src/data_process/VideoProcess.cpp
         if (arg1 == "process")
         {
-            VideoProcessor process(arg2);
+            VideoProcessor p(arg2);
+            p.process();
         }
 
         else
