@@ -1,5 +1,5 @@
 // ============================
-// VideoProcessor Header File
+// VideoProcessor Header
 // Process video data into luma
 // ============================
 
@@ -22,8 +22,8 @@ public:
     virtual ~VideoProcessor();
 
     // Methods to retrieve and return the luma data
-    void process(void);
-    std::vector<double> get_luma(void);
+    void process();
+    std::vector<double> get_luma();
 
 private:
     // Store the luma data from a video

@@ -1,5 +1,5 @@
 // ============================
-// VideoProcessor Source File
+// VideoProcessor Source
 // Process video data into luma
 // ============================
 
@@ -65,10 +65,7 @@ void VideoProcessor::process()
     // Add data to the specified file
     std::ofstream data;
     data.open(data_path);
-    for (int i = 0; i < luma_data.size(); i++)
-    {
-        data << luma_data[i] << ",";
-    }
+    for (double i : luma_data) data << i << ",";
     data.close();
 }
 

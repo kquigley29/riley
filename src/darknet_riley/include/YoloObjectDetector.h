@@ -1,6 +1,7 @@
-// ---------------------------
-// Yolo Object Detector Header
-// ---------------------------
+// ============================
+// YoloObjectDetector Header
+// Detect balls and green spots
+// ============================
 
 
 // Includes
