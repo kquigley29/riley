@@ -22,11 +22,12 @@ src/darknet/data
 # auto-compiled files/folders
 __pycache__
 
-# videos and images
+# videos, images and data
 *.mp4
 *.jpg
 *.jpeg
 *.png
+data/store/*
 
 # executables
 *.exe
