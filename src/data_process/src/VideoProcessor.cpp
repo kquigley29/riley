@@ -68,7 +68,7 @@ void VideoProcessor::process() {
 //        luma_data.push_back(frame_data);
 
         // Write the frames data to the file
-        data.open(data_path);
+        data.open(data_path, std::ios_base::app);
         data << "[";
         for (int i = 0; i < frame_data.size() - 1; i++) data << frame_data[i] << ",";
         data << frame_data[frame_data.size() - 1] << "]";
@@ -81,7 +81,7 @@ void VideoProcessor::process() {
         // If there is a new frame we can add a comma to the data file
         if (okay)
         {
-            data.open(data_path);
+            data.open(data_path, std::ios_base::app);
             data << ",";
             data.close();
         }
@@ -89,7 +89,7 @@ void VideoProcessor::process() {
     }
 
     // End off the data file list format
-    data.open(data_path);
+    data.open(data_path, std::ios_base::app);
     data << "]";
     data.close();
 }
