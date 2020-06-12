@@ -23,11 +23,11 @@ public:
 
     // Methods to retrieve and return the luma data
     void process();
-    std::vector<double> get_luma();
+    std::vector<std::vector<double>> get_luma();
 
 private:
     // Store the luma data from a video
-    std::vector<double> luma_data {};
+    std::vector<std::vector<double>> luma_data {};
 
     // File name
     // Location of video and data
