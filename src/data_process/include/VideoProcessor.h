@@ -1,17 +1,21 @@
-// ============================
+// =====================
 // VideoProcessor Header
-// Process video data into luma
-// ============================
+// Process video data
+// =====================
 
 
 // Includes
-#include <opencv2/opencv.hpp>
-#include <opencv2/videoio.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <cmath>
 #include <vector>
+#include <random>
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/videoio.hpp>
+
+#include "../../opennn/opennn/opennn.h"
 
 
 class VideoProcessor
@@ -21,18 +25,23 @@ public:
     explicit VideoProcessor(const cv::String &name);
     virtual ~VideoProcessor();
 
-    // Methods to retrieve and return the luma data
+    // Methods to process data
     void process();
-    std::vector<std::vector<double>> get_luma();
+    OpenNN::Matrix<double> get_training_data();
 
 private:
-    // Store the luma data from a video
-    std::vector<std::vector<double>> luma_data {};
-
     // File name
-    // Location of video and data
+    // Location of video
     std::string file_name;
     std::string video_path;
-    std::string data_path;
+
+    // Target value
+    int target;
+
+    // Parameters
+    const int FRAME_HEIGHT = 10;
+    const int FRAME_WIDTH = 10;
+    const int NUM_FRAMES_FOR_DATA = 3;
+    const int RANDOM_NUMBER_BUFFER = 100;
 };
 

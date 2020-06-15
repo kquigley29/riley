@@ -4,20 +4,10 @@
 
 # development directories
 cmake-build-debug
-venv
+build/*
 
 # open source directories
 opennn
-src/darknet/examples
-src/darknet/obj
-src/darknet/python
-src/darknet/results
-src/darknet/LICENSE*
-src/darknet/*.weights
-src/darknet/*.a
-src/darknet/*.so
-src/darknet/darknet
-src/darknet/data
 
 # auto-compiled files/folders
 __pycache__
@@ -28,6 +18,4 @@ __pycache__
 *.jpeg
 *.png
 data/store/*
-
-# executables
-*.exe
+data/videos/*
