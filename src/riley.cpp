@@ -47,7 +47,7 @@ int main(int argc, char** argv)
         VideoProcessor processor(video_name);
         OpenNN::Matrix<double> data;
         data = processor.get_training_data();
-        data.print_preview();
+        data.print();
     }
     // If nothing matches the arguments tell us!
     else

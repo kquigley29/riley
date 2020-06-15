@@ -97,7 +97,7 @@ OpenNN::Matrix<double> VideoProcessor::get_training_data() {
     // Declare the frame to be used and the frame size
     // Declare colour indices for data vector
     // Loop NUM_FRAMES_FOR_DATA times to get data from frames
-    OpenNN::Matrix<double> data_matrix(NUM_FRAMES_FOR_DATA * 3, FRAME_HEIGHT * FRAME_WIDTH);
+    OpenNN::Matrix<double> data_matrix(NUM_FRAMES_FOR_DATA * 3, FRAME_HEIGHT * FRAME_WIDTH + target_vector.size());
     cv::Mat frame;
     int red_index = 0;
     int green_index = 1;
@@ -141,9 +141,18 @@ OpenNN::Matrix<double> VideoProcessor::get_training_data() {
 
         // Add the vectors to the matrix
         // Increment the colour indices
-        for (int r = 0; r < red_vec.size(); r++) data_matrix(red_index, r) = red_vec[r];
-        for (int g = 0; g < green_vec.size(); g++) data_matrix(green_index, g) = green_vec[g];
-        for (int b = 0; b < blue_vec.size(); b++) data_matrix(blue_index, b) = blue_vec[b];
+        for (int r = 0; r < target_vector.size() + red_vec.size(); r++) {
+            if (r > 36) data_matrix(red_index, r) = red_vec[r];
+            else data_matrix(red_index, r) = target_vector[r];
+        }
+        for (int g = 0; g < target_vector.size() + green_vec.size(); g++) {
+            if (g > 36) data_matrix(green_index, g) = green_vec[g];
+            else data_matrix(green_index, g) = target_vector[g];
+        }
+        for (int b = 0; b < target_vector.size() + blue_vec.size(); b++) {
+            if (b > 36) data_matrix(blue_index, b) = blue_vec[b];
+            else data_matrix(blue_index, b) = target_vector[b];
+        }
         red_index += 3;
         green_index += 3;
         blue_index += 3;
