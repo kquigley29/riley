@@ -16,16 +16,16 @@
 
 class RileyNet {
 public:
-    RileyNet();
+    explicit RileyNet(const std::string&);
     ~RileyNet();
 
     // Member Functions
     void print_architecture();
     void setup_and_train(const OpenNN::Matrix<double>&);
-    void save_the_network(const string& network_file_name);
 
 private:
     OpenNN::NeuralNetwork neural_network;
+    std::string network_name;
 
     // Params
     const OpenNN::Vector<std::size_t> INPUT_DIMS {1, 100, 100};

@@ -8,11 +8,13 @@
 
 // RileyNet Constructor
 // Create the Neural Network with the specified parameters
-RileyNet::RileyNet() {
+RileyNet::RileyNet(const std::string& name) {
 
     std::cout << "R I L E Y  N E U R A L  N E T W O R K\n\n";
     std::cout << "Rule no. 1: Fuck SourceForge.\n";
     std::cout << "Setting up the network...\n";
+
+    network_name = name;
 
     // Scaling Layer
     auto* scaling_layer_ptr = new OpenNN::ScalingLayer(INPUT_DIMS);
@@ -88,15 +90,16 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double>&  matrix_data) {
     OpenNN::TrainingStrategy training_strategy(&neural_network, &data_set);
     training_strategy.set_optimization_method(OpenNN::TrainingStrategy::OptimizationMethod::STOCHASTIC_GRADIENT_DESCENT);
     training_strategy.set_loss_method(OpenNN::TrainingStrategy::LossMethod::MEAN_SQUARED_ERROR);
-    training_strategy.get_loss_index_pointer()->set_regularization_method(OpenNN::LossIndex::RegularizationMethod::L2);
+//    training_strategy.get_loss_index_pointer()->set_regularization_method(OpenNN::LossIndex::RegularizationMethod::L2);
     training_strategy.set_display(true);
 
     OpenNN::StochasticGradientDescent* sgd_pointer = training_strategy.get_stochastic_gradient_descent_pointer();
 
-    sgd_pointer->set_minimum_loss_increase(1.0e-6);
-    sgd_pointer->set_maximum_epochs_number(12);
+//    sgd_pointer->set_minimum_loss_increase(1.0e-6);
+    sgd_pointer->set_maximum_epochs_number(0);
     sgd_pointer->set_display_period(1);
     sgd_pointer->set_maximum_time(1800);
+    sgd_pointer->set_initial_learning_rate(0.1);
 
     // Train the model
     OpenNN::OptimizationAlgorithm::Results training_strategy_results = training_strategy.perform_training();
@@ -107,17 +110,11 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double>&  matrix_data) {
 
     OpenNN::Matrix<size_t> confusion = testing_analysis.calculate_confusion();
 
-    cout << "\n\nConfusion matrix: \n" << "\n" << confusion << "\n";
-    cout << "\nAccuracy: " << (confusion.calculate_trace()/confusion.calculate_sum())*100 << " %" << "\n\n";
+//    cout << "\n\nConfusion matrix: \n" << "\n" << confusion << "\n";
+//    cout << "\nAccuracy: " << (confusion.calculate_trace()/confusion.calculate_sum())*100 << " %" << "\n\n";
+
+    neural_network.save("/home/keane/Projects/riley/src/network/network_meta/store/" + network_name + "_network.xml");
+    training_strategy.save("/home/keane/Projects/riley/src/network/network_meta/store/" + network_name + "_train_strat.xml");
 }
-
-void RileyNet::save_the_network(const std::string& network_file_name) {
-
-    OpenNN::NeuralNetwork& net_to_save = neural_network;
-    std::cout << "Saving Network\n";
-    net_to_save.save_expression(network_file_name);
-    net_to_save.save_expression_python(network_file_name);
-}
-
 
 RileyNet::~RileyNet() = default;

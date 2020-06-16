@@ -50,11 +50,11 @@ int main(int argc, char** argv) {
     else if (method == "train") {
         if (argc == 3) {
 
-            RileyNet nn_1; /* Because Ryan likes numbers */
-            nn_1.print_architecture();
-
             std::string list_file_name = argv[2];
-            std::ifstream list_file("/home/keane/Projects/riley/data/" + list_file_name);
+            std::ifstream list_file("/home/keane/Projects/riley/data/" + list_file_name +   ".list");
+
+            RileyNet nn_1(list_file_name); /* Because Ryan likes numbers */
+            nn_1.print_architecture();
 
             std::vector<std::string> data_mp4_names;
             std:;
