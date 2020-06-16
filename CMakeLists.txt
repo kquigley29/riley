@@ -2,15 +2,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(riley)
 set(CMAKE_CXX_STANDARD 14)
-set(LIBRARY_LINKS lib/data_process_lib lib/darknet_riley_lib)
 
-
-find_package(OpenCV REQUIRED)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY build)
 
 add_subdirectory(src)
-
-add_executable(riley
-        src/riley.cpp)
-target_link_libraries(riley
-        data_process_lib
-        network_lib)

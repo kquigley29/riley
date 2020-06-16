@@ -28,6 +28,8 @@ private:
     std::string network_name;
 
     // Params
+    const std::size_t BATCH_INSTANCES_NUMBER = 1;
+
     const OpenNN::Vector<std::size_t> INPUT_DIMS {1, 100, 100};
     const OpenNN::Vector<std::size_t> TARGET_DIMS {37};
     const std::size_t OUTPUT_NUM = 37;

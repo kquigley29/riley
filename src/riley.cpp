@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-#include "data_process/include/VideoProcessor.h"
+#include "manipulate/include/VideoProcessor.h"
 #include "network/include/RileyNet.h"
 //#include "darknet_riley/include/YoloObjectDetector.h"
 

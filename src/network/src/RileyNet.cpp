@@ -85,6 +85,8 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double>&  matrix_data) {
     // Keep all the data for training
     data_set.split_instances_sequential(1, 0, 0);
 
+    data_set.set_batch_instances_number(BATCH_INSTANCES_NUMBER);
+
 
     // Setup Training
     OpenNN::TrainingStrategy training_strategy(&neural_network, &data_set);
