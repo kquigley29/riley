@@ -107,7 +107,7 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double>&  matrix_data) {
 
     OpenNN::Matrix<size_t> confusion = testing_analysis.calculate_confusion();
 
-    cout << "\n\nConfusion matrix: \n" << endl << confusion << "\n";
+    cout << "\n\nConfusion matrix: \n" << "\n" << confusion << "\n";
     cout << "\nAccuracy: " << (confusion.calculate_trace()/confusion.calculate_sum())*100 << " %" << "\n\n";
 }
 
