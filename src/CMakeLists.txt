@@ -3,4 +3,9 @@ project(riley)
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(data_process)
-include_directories(data_process/include)
+add_subdirectory(network)
+add_subdirectory(opennn)
+
+include_directories(
+        data_process/include
+        network/include)

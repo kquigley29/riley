@@ -9,11 +9,15 @@
 
 
 // VideoProcessor constructor
-VideoProcessor::VideoProcessor(const cv::String& name)
-{
+VideoProcessor::VideoProcessor(const cv::String& name) {
+
+    std::cout << "<<LOAD IT UP>>\n";
+
     // Get the video file name
     file_name = name;
     video_path = "/home/keane/Projects/riley/data/videos/" + name + ".mp4";
+
+    std::cout << "VideoProcessor object created with video_path=" << video_path << "\n";
 
     // Get the target value from the video name
     std::string target_string = name.substr(6);
@@ -23,7 +27,7 @@ VideoProcessor::VideoProcessor(const cv::String& name)
 
 
 // Process video into 300x300 sized RGB frames
-void VideoProcessor::process() {
+void VideoProcessor::rgb_stream() {
     // Capture the video
     cv::VideoCapture capture(video_path);
 
@@ -71,7 +75,7 @@ void VideoProcessor::process() {
 }
 
 
-OpenNN::Matrix<double> VideoProcessor::get_training_data() {
+OpenNN::Matrix<double> VideoProcessor::fetch_data_matrix() {
 
     // Declare the target vector and populate it
     OpenNN::Vector<double> target_vector(37);

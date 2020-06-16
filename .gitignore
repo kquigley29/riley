@@ -19,3 +19,4 @@ __pycache__
 *.png
 data/store/*
 data/videos/*
+*.list

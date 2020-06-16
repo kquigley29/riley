@@ -26,8 +26,8 @@ public:
     virtual ~VideoProcessor();
 
     // Methods to process data
-    void process();
-    OpenNN::Matrix<double> get_training_data();
+    void rgb_stream();
+    OpenNN::Matrix<double> fetch_data_matrix();
 
 private:
     // File name
@@ -39,9 +39,9 @@ private:
     int target;
 
     // Parameters
-    const int FRAME_HEIGHT = 10;
-    const int FRAME_WIDTH = 10;
-    const int NUM_FRAMES_FOR_DATA = 3;
+    const int FRAME_HEIGHT = 100;
+    const int FRAME_WIDTH = 100;
+    const int NUM_FRAMES_FOR_DATA = 5;
     const int RANDOM_NUMBER_BUFFER = 100;
 };
 

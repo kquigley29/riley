@@ -12,5 +12,5 @@ add_subdirectory(src)
 add_executable(riley
         src/riley.cpp)
 target_link_libraries(riley
-        ${OpenCV_LIBS}
-        data_process_lib)
+        data_process_lib
+        network_lib)
