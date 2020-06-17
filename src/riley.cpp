@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
             std::string net_xml = argv[2];
             std::string train_xml = argv[3];
             std::string list_file_name = argv[4];
-            std::ifstream list_file("/home/keane/Projects/riley/" + list_file_name);
+            std::ifstream list_file(list_file_name);
 
             for (int i = 0; i < TRAINING_LOOP_LIMIT; i++) {
                 RileyNet nn_1(net_xml, train_xml); /* Because Ryan likes numbers */

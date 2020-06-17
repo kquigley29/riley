@@ -44,7 +44,7 @@ private:
     const std::size_t FIRST_POOLING_LAYER_POOL_HEIGHT = 8;
     const std::size_t FIRST_POOLING_LAYER_POOL_WIDTH = 8;
 
-    const std::size_t PERCEPTRON_NEURON_NUM = 37;
+    const std::size_t PERCEPTRON_NEURON_NUM = 500;
 };
 
 

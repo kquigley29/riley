@@ -14,13 +14,15 @@ VideoProcessor::VideoProcessor(const cv::String& name) {
     std::cout << "<<LOAD IT UP>>\n";
 
     // Get the video file name
-    video_path = "/home/keane/Projects/riley/data/" + name;
+    video_path = name;
 
     std::cout << "VideoProcessor object created with video_path=" << video_path << "\n";
 
     // Get the target value from the video name
-    std::string target_string = name.substr(14, 2);
+    std::string target_string = name.substr(18, 2);
     target = std::stoi(target_string);
+
+    std::cout << "Target: " << target << "\n";
 }
 
 

@@ -7,7 +7,7 @@ find_package(OpenCV REQUIRED)
 set(OpenNN_DIR ${CMAKE_SOURCE_DIR}/src/opennn/opennn)
 
 # Set all binaries to be placed in riley/bin
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Include all the include directories
 include_directories(
