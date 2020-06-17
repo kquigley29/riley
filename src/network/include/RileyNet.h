@@ -16,7 +16,7 @@
 
 class RileyNet {
 public:
-    explicit RileyNet(const std::string&);
+    explicit RileyNet(const std::string&, const std::string&);
     ~RileyNet();
 
     // Member Functions
@@ -25,7 +25,8 @@ public:
 
 private:
     OpenNN::NeuralNetwork neural_network;
-    std::string network_name;
+    std::string network_xml;
+    std::string training_strat_xml;
 
     // Params
     const std::size_t BATCH_INSTANCES_NUMBER = 1;

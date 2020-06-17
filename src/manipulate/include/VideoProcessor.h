@@ -22,7 +22,7 @@ class VideoProcessor
 {
 public:
     // Declare constructor and destructor
-    explicit VideoProcessor(const cv::String &name);
+    explicit VideoProcessor(const cv::String& name);
     virtual ~VideoProcessor();
 
     // Methods to process data
@@ -32,7 +32,6 @@ public:
 private:
     // File name
     // Location of video
-    std::string file_name;
     std::string video_path;
 
     // Target value

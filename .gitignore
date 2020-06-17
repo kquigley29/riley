@@ -1,11 +1,11 @@
 # IDE made files/folders
 .idea
 .vscode
+.vs
 
 # development directories
 cmake-build-debug
-build/*
-
+bin
 # open source directories
 opennn
 

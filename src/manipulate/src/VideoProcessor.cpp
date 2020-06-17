@@ -4,6 +4,9 @@
 // =====================
 
 
+#define ABSOLUTE_PATH_TO_RILEY
+
+
 // Includes
 #include "../include/VideoProcessor.h"
 
@@ -14,15 +17,13 @@ VideoProcessor::VideoProcessor(const cv::String& name) {
     std::cout << "<<LOAD IT UP>>\n";
 
     // Get the video file name
-    file_name = name;
-    video_path = "/home/keane/Projects/riley/data/videos/" + name + ".mp4";
+    video_path = "/home/keane/Projects/riley/data/" + name;
 
     std::cout << "VideoProcessor object created with video_path=" << video_path << "\n";
 
     // Get the target value from the video name
-    std::string target_string = name.substr(6);
+    std::string target_string = name.substr(14, 2);
     target = std::stoi(target_string);
-
 }
 
 
