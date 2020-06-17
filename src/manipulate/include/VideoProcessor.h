@@ -21,7 +21,7 @@
 class VideoProcessor
 {
 public:
-    // Declare constructor and destructor
+    // Constructor and destructor
     explicit VideoProcessor(const cv::String& name);
     virtual ~VideoProcessor();
 
@@ -29,6 +29,7 @@ public:
     void rgb_stream();
     OpenNN::Matrix<double> fetch_data_matrix();
     void save_frames(const std::string&);
+    void resize(const int&, const int&);
 
 private:
     // File name

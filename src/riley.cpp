@@ -32,16 +32,17 @@ int main(int argc, char** argv) {
     if (method == "rgb") {
         if (argc == 3) {
 
+            std::cout << "RGB Stream...\n";
             // Stream the rgb of the video pixels
             std::string video_name = argv[2];
             VideoProcessor processor(video_name);
             processor.rgb_stream();
         }
     }
-
     else if (method == "fetch") {
         if (argc == 3) {
 
+            std::cout << "Fetching...\n";
             // Fetch the training data of the video
             std::string video_name = argv[2];
             VideoProcessor processor(video_name);
@@ -53,6 +54,7 @@ int main(int argc, char** argv) {
     else if (method == "train") {
         if (argc == 5) {
 
+            std::cout << "Training...\n";
             std::string net_xml = argv[2];
             std::string train_xml = argv[3];
             std::string list_file_name = argv[4];
@@ -86,6 +88,7 @@ int main(int argc, char** argv) {
     else if (method == "collect") {
         if (argc == 4) {
 
+            std::cout << "Collecting...\n";
             std::string video_name = argv[2];
             std::string image_name_piece = argv[3];
             VideoProcessor processor(video_name);

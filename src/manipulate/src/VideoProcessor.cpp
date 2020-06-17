@@ -175,12 +175,22 @@ void VideoProcessor::save_frames(const std::string& image_name) {
     cv::Mat frame;
     while (capture.read(frame)) {
 
-        std::string file = "/home/keane/Projects/riley/data/ball_images/" + to_string(count) + image_name;
+        std::string file = "/home/keane/Projects/riley/data/test_images/" + to_string(count) + image_name;
         cv::imwrite(file, frame);
         count++;
     }
 
     std::cout << "Finished!\n";
+}
+
+void VideoProcessor::resize(const int &width, const int &height) {
+
+    cv::Mat image;
+    image = cv::imread(video_path);
+    cv::Size image_size(width, height);
+    cv::resize(image, image, image_size);
+
+    cv::imwrite(video_path, image);
 }
 
 

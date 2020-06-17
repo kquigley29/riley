@@ -6,6 +6,7 @@
 # development directories
 cmake-build-debug
 bin
+
 # open source directories
 opennn
 
@@ -24,3 +25,7 @@ __pycache__
 # binaries and executables
 *.bin
 *.exe
+
+# weights and backups
+.weights
+.backup

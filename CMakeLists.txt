@@ -28,7 +28,7 @@ add_subdirectory(${OpenNN_DIR})
 add_library(network_lib
         ${CMAKE_SOURCE_DIR}/src/network/src/RileyNet.cpp)
 target_link_libraries(network_lib
-        opennn)
+        opennn_lib)
 
 # Add the riley executable
 add_executable(riley.bin
@@ -37,7 +37,9 @@ target_link_libraries(riley.bin
         manipulate_lib
         network_lib)
 
-
-
-
+# Add the manipulation executable
+add_executable(manipulate.bin
+        ${CMAKE_SOURCE_DIR}/src/manipulate/src/manipulate.cpp)
+target_link_libraries(manipulate.bin
+        manipulate_lib)
 
