@@ -4,10 +4,15 @@
 
 #include <string>
 #include <iostream>
-#include "../include/VideoProcessor.h"
+#include "../include/MediaProcessor.h"
+
+
+void invalid() {std::cout << "Invalid arguments!\n";}
 
 
 int main(int argc, char** argv) {
+
+    if (argc < 2) {invalid(); return 1;}
 
     std::string method = argv[1];
 
@@ -43,12 +48,62 @@ int main(int argc, char** argv) {
 
                     cv::imwrite(line, image);
                 }
-            }
-        }
-    }
-    else {
 
-        std::cout << "Invalid arguments!\n";
-        return 1;
+                return 0;
+            }
+
+            invalid();
+        }
+
+        invalid();
     }
+
+    else if (method == "fetch") {
+        if (argc == 3) {
+
+            std::cout << "Fetching...\n";
+            // Fetch the training data of the video
+            std::string video_name = argv[2];
+            MediaProcessor processor(video_name);
+            OpenNN::Matrix<double> data;
+            data = processor.fetch_data_matrix();
+            data.print();
+
+            return 0;
+        }
+
+        invalid();
+    }
+
+    else if (method == "collect") {
+        if (argc == 4) {
+
+            std::cout << "Collecting...\n";
+            std::string video_name = argv[2];
+            std::string image_name_piece = argv[3];
+            MediaProcessor processor(video_name);
+            processor.save_frames(image_name_piece);
+
+            return 0;
+        }
+
+        invalid();
+    }
+
+    else if (method == "rgb") {
+        if (argc == 3) {
+
+            std::cout << "RGB Stream...\n";
+            // Stream the rgb of the video pixels
+            std::string video_name = argv[2];
+            MediaProcessor processor(video_name);
+            processor.rgb_stream();
+
+            return 0;
+        }
+
+        invalid();
+    }
+
+    invalid();
 }

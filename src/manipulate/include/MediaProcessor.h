@@ -1,5 +1,5 @@
 // =====================
-// VideoProcessor Header
+// MediaProcessor Header
 // Process video data
 // =====================
 
@@ -18,12 +18,12 @@
 #include "../../opennn/opennn/opennn.h"
 
 
-class VideoProcessor
+class MediaProcessor
 {
 public:
     // Constructor and destructor
-    explicit VideoProcessor(const cv::String& name);
-    virtual ~VideoProcessor();
+    explicit MediaProcessor(const cv::String& name);
+    virtual ~MediaProcessor();
 
     // Methods to process data
     void rgb_stream();

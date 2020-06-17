@@ -17,7 +17,7 @@ include_directories(
 
 # Add the manipulate library
 add_library(manipulate_lib
-        ${CMAKE_SOURCE_DIR}/src/manipulate/src/VideoProcessor.cpp)
+        ${CMAKE_SOURCE_DIR}/src/manipulate/src/MediaProcessor.cpp)
 target_link_libraries(manipulate_lib
         ${OpenCV_LIBS})
 

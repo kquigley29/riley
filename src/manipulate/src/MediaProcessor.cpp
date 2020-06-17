@@ -1,22 +1,22 @@
 // =====================
-// VideoProcessor Source
+// MediaProcessor Source
 // Process video data
 // =====================
 
 
 // Includes
-#include "../include/VideoProcessor.h"
+#include "../include/MediaProcessor.h"
 
 
-// VideoProcessor constructor
-VideoProcessor::VideoProcessor(const cv::String& name) {
+// MediaProcessor constructor
+MediaProcessor::MediaProcessor(const cv::String& name) {
 
     std::cout << "<<LOAD IT UP>>\n";
 
     // Get the video file name
     video_path = name;
 
-    std::cout << "VideoProcessor object created with video_path=" << video_path << "\n";
+    std::cout << "MediaProcessor object created with video_path=" << video_path << "\n";
 
     // Get the target value from the video name
     std::string target_string = name.substr(18, 2);
@@ -27,7 +27,7 @@ VideoProcessor::VideoProcessor(const cv::String& name) {
 
 
 // Process video into 300x300 sized RGB frames
-void VideoProcessor::rgb_stream() {
+void MediaProcessor::rgb_stream() {
     // Capture the video
     cv::VideoCapture capture(video_path);
 
@@ -75,7 +75,7 @@ void VideoProcessor::rgb_stream() {
 }
 
 
-OpenNN::Matrix<double> VideoProcessor::fetch_data_matrix() {
+OpenNN::Matrix<double> MediaProcessor::fetch_data_matrix() {
 
     // Declare the target vector and populate it
     OpenNN::Vector<double> target_vector(37);
@@ -168,7 +168,7 @@ OpenNN::Matrix<double> VideoProcessor::fetch_data_matrix() {
 }
 
 
-void VideoProcessor::save_frames(const std::string& image_name) {
+void MediaProcessor::save_frames(const std::string& image_name) {
 
     cv::VideoCapture capture(video_path);
     int count = 0;
@@ -183,7 +183,7 @@ void VideoProcessor::save_frames(const std::string& image_name) {
     std::cout << "Finished!\n";
 }
 
-void VideoProcessor::resize(const int &width, const int &height) {
+void MediaProcessor::resize(const int &width, const int &height) {
 
     cv::Mat image;
     image = cv::imread(video_path);
@@ -195,4 +195,4 @@ void VideoProcessor::resize(const int &width, const int &height) {
 
 
 // Define a trivial destructor with 'default'
-VideoProcessor::~VideoProcessor() = default;
+MediaProcessor::~MediaProcessor() = default;
