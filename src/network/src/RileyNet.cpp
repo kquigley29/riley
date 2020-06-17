@@ -18,10 +18,10 @@ RileyNet::RileyNet(const std::string& net_xml_name, const std::string& train_xml
     network_xml = "/home/keane/Projects/riley/src/network/network_meta/store/" + net_xml_name;
     training_strat_xml = "/home/keane/Projects/riley/src/network/network_meta/store/" + train_xml_name;
 
-    try {
-        neural_network.load(network_xml);
-    }
-    catch (exception&) {
+//    try {
+//        neural_network.load(network_xml);
+//    }
+//    catch (exception&) {
 
         // Scaling Layer
         auto *scaling_layer_ptr = new OpenNN::ScalingLayer(INPUT_DIMS);
@@ -59,7 +59,7 @@ RileyNet::RileyNet(const std::string& net_xml_name, const std::string& train_xml
         // Probabilistic Layer
         auto *probabilistic_layer = new OpenNN::ProbabilisticLayer(perceptron_layer_outputs, OUTPUT_NUM);
         neural_network.add_layer(probabilistic_layer);
-    }
+//    }
 
     neural_network.print_summary();
 
@@ -96,14 +96,14 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double> &matrix_data) {
     // Load the training strategy from the saved xml
     OpenNN::TrainingStrategy training_strategy(&neural_network, &data_set);
 
-    try {
-        training_strategy.load(training_strat_xml);
-    }
-    catch (exception&) {
+//    try {
+//        training_strategy.load(training_strat_xml);
+//    }
+//    catch (exception&) {
 
         // Setup Training
         training_strategy.set_optimization_method(OpenNN::TrainingStrategy::OptimizationMethod::STOCHASTIC_GRADIENT_DESCENT);
-        training_strategy.set_loss_method(OpenNN::TrainingStrategy::LossMethod::MEAN_SQUARED_ERROR);
+        training_strategy.set_loss_method(OpenNN::TrainingStrategy::LossMethod::CROSS_ENTROPY_ERROR);
 //    training_strategy.get_loss_index_pointer()->set_regularization_method(OpenNN::LossIndex::RegularizationMethod::L2);
         training_strategy.set_display(true);
 
@@ -113,9 +113,9 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double> &matrix_data) {
         sgd_pointer->set_maximum_epochs_number(0);
         sgd_pointer->set_display_period(1);
         sgd_pointer->set_maximum_time(1800);
-        sgd_pointer->set_initial_learning_rate(0.01);
+        sgd_pointer->set_initial_learning_rate(0.001);
         sgd_pointer->set_momentum(0.9);
-    }
+//    }
 
     // Train the model
     OpenNN::OptimizationAlgorithm::Results training_strategy_results = training_strategy.perform_training();
@@ -128,8 +128,8 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double> &matrix_data) {
 //    std::cout << "\n\nConfusion matrix: \n" << "\n" << confusion << "\n";
 //    std::cout << "\nAccuracy: " << (confusion.calculate_trace()/confusion.calculate_sum())*100 << " %" << "\n\n";
 
-    neural_network.save(network_xml);
-    training_strategy.save(training_strat_xml);
+//    neural_network.save(network_xml);
+//    training_strategy.save(training_strat_xml);
 }
 
 
