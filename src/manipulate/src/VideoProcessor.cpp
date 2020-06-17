@@ -4,9 +4,6 @@
 // =====================
 
 
-#define ABSOLUTE_PATH_TO_RILEY
-
-
 // Includes
 #include "../include/VideoProcessor.h"
 
@@ -166,6 +163,22 @@ OpenNN::Matrix<double> VideoProcessor::fetch_data_matrix() {
     // Info
     std::cout << data_matrix(3,45);
     return data_matrix;
+}
+
+
+void VideoProcessor::save_frames(const std::string& image_name) {
+
+    cv::VideoCapture capture(video_path);
+    int count = 0;
+    cv::Mat frame;
+    while (capture.read(frame)) {
+
+        std::string file = "/home/keane/Projects/riley/data/ball_images/" + to_string(count) + image_name;
+        cv::imwrite(file, frame);
+        count++;
+    }
+
+    std::cout << "Finished!\n";
 }
 
 

@@ -28,6 +28,7 @@ public:
     // Methods to process data
     void rgb_stream();
     OpenNN::Matrix<double> fetch_data_matrix();
+    void save_frames(const std::string&);
 
 private:
     // File name

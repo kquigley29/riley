@@ -83,6 +83,15 @@ int main(int argc, char** argv) {
             }
         }
     }
+    else if (method == "collect") {
+        if (argc == 4) {
+
+            std::string video_name = argv[2];
+            std::string image_name_piece = argv[3];
+            VideoProcessor processor(video_name);
+            processor.save_frames(image_name_piece);
+        }
+    }
     // If nothing matches the arguments tell us!
     else {
         std::cout << invalid_args << "\n";
