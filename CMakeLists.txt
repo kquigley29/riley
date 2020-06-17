@@ -31,9 +31,9 @@ target_link_libraries(network_lib
         opennn)
 
 # Add the riley executable
-add_executable(riley
+add_executable(riley.bin
         ${CMAKE_SOURCE_DIR}/src/riley.cpp)
-target_link_libraries(riley
+target_link_libraries(riley.bin
         manipulate_lib
         network_lib)
 
