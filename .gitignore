@@ -20,3 +20,7 @@ __pycache__
 
 # networks, training startegies and params
 *.xml
+
+# binaries and executables
+*.bin
+*.exe
