@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
             // Fetch the training data of the video
             std::string video_name = argv[2];
             MediaProcessor processor(video_name);
-            OpenNN::Matrix<double> data;
+            OpenNN::Matrix<int> data;
             data = processor.fetch_data_matrix();
             data.print();
 

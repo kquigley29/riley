@@ -83,6 +83,7 @@ void RileyNet::setup_and_train(const OpenNN::Matrix<double> &matrix_data) {
 
     data_set.set_input_variables_dimensions(INPUT_DIMS);
     data_set.set_target_variables_dimensions(TARGET_DIMS);
+    data_set.set_batch_instances_number(3);
 
     // Keep all the data for training
     data_set.split_instances_sequential(1, 0, 0);
