@@ -32,9 +32,8 @@ public:
     void resize(const int&, const int&);
 
 private:
-    // File name
-    // Location of video
-    std::string video_path;
+    // Location of the file
+    std::string path;
 
     // Target value
     int target;

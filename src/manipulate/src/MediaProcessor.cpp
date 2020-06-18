@@ -14,9 +14,9 @@ MediaProcessor::MediaProcessor(const cv::String& name) {
     std::cout << "<<LOAD IT UP>>\n";
 
     // Get the video file name
-    video_path = name;
+    path = name;
 
-    std::cout << "MediaProcessor object created with video_path=" << video_path << "\n";
+    std::cout << "MediaProcessor object created with video_path=" << path << "\n";
 
     // Get the target value from the video name
     std::string target_string = name.substr(18, 2);
@@ -29,7 +29,7 @@ MediaProcessor::MediaProcessor(const cv::String& name) {
 // Process video into 300x300 sized RGB frames
 void MediaProcessor::rgb_stream() {
     // Capture the video
-    cv::VideoCapture capture(video_path);
+    cv::VideoCapture capture(path);
 
     // Declare the frame matrix
     // declare new frame size and frame count
@@ -85,7 +85,7 @@ OpenNN::Matrix<double> MediaProcessor::fetch_data_matrix() {
     }
 
     // Capture the video
-    cv::VideoCapture capture(video_path);
+    cv::VideoCapture capture(path);
 
     // Skip the unwanted frames
     int num_frames = capture.get(cv::CAP_PROP_FRAME_COUNT);
@@ -101,7 +101,8 @@ OpenNN::Matrix<double> MediaProcessor::fetch_data_matrix() {
     // Declare the frame to be used and the frame size
     // Declare colour indices for data vector
     // Loop NUM_FRAMES_FOR_DATA times to get data from frames
-    OpenNN::Matrix<double> data_matrix(NUM_FRAMES_FOR_DATA * 3, FRAME_HEIGHT * FRAME_WIDTH + target_vector.size());
+    OpenNN::Matrix<double> data_matrix(NUM_FRAMES_FOR_DATA * 3,
+                                     FRAME_HEIGHT * FRAME_WIDTH + target_vector.size());
     cv::Mat frame;
     int red_index = 0;
     int green_index = 1;
@@ -117,7 +118,9 @@ OpenNN::Matrix<double> MediaProcessor::fetch_data_matrix() {
         // Declare data_matrix to store RGB with the correct size
         // Declare vectors to store RGB values
         // Declare pixel_count to count the pixels
-        OpenNN::Vector<double> red_vec(FRAME_WIDTH * FRAME_HEIGHT), green_vec(FRAME_WIDTH * FRAME_HEIGHT), blue_vec(FRAME_WIDTH * FRAME_HEIGHT);
+        OpenNN::Vector<double> red_vec(FRAME_WIDTH * FRAME_HEIGHT),
+                               green_vec(FRAME_WIDTH * FRAME_HEIGHT),
+                               blue_vec(FRAME_WIDTH * FRAME_HEIGHT);
         int pixel_count = 0;
 
         // Loop through the frame's pixels
@@ -186,11 +189,11 @@ void MediaProcessor::save_frames(const std::string& image_name) {
 void MediaProcessor::resize(const int &width, const int &height) {
 
     cv::Mat image;
-    image = cv::imread(video_path);
+    image = cv::imread(path);
     cv::Size image_size(width, height);
     cv::resize(image, image, image_size);
 
-    cv::imwrite(video_path, image);
+    cv::imwrite(path, image);
 }
 
 
