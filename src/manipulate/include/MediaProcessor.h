@@ -18,6 +18,10 @@
 #include "../../opennn/opennn/opennn.h"
 
 
+#ifndef RILEY_MEDIAPROCESSOR_H
+#define RILEY_MEDIAPROCESSOR_H
+
+
 class MediaProcessor
 {
 public:
@@ -45,3 +49,5 @@ private:
     const int RANDOM_NUMBER_BUFFER = 50;
 };
 
+
+#endif //RILEY_MEDIAPROCESSOR_H

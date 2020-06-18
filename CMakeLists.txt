@@ -35,7 +35,9 @@ target_link_libraries(network_lib
 
 
 # Add the darknet library
-add_library(darknet_lib
+add_library(darknet_riley_lib
+        ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp
+
         ${Darknet_DIR}/src/activation_layer.c        ${Darknet_DIR}/src/im2col.c
         ${Darknet_DIR}/src/activations.c             ${Darknet_DIR}/src/image.c
         ${Darknet_DIR}/src/avgpool_layer.c           ${Darknet_DIR}/src/layer.c
@@ -65,7 +67,7 @@ add_library(darknet_lib
         ${Darknet_DIR}/src/blas_kernels.cu           ${Darknet_DIR}/src/dropout_layer_kernels.cu
         ${Darknet_DIR}/src/col2im_kernels.cu         ${Darknet_DIR}/src/im2col_kernels.cu
         ${Darknet_DIR}/src/convolutional_kernels.cu  ${Darknet_DIR}/src/maxpool_layer_kernels.cu)
-target_link_libraries(darknet_lib
+target_link_libraries(darknet_riley_lib
         ${OpenCV_LIBs})
 
 
@@ -76,7 +78,7 @@ add_executable(riley
 target_link_libraries(riley
         manipulate_lib
         network_lib
-        darknet_lib)
+        darknet_riley_lib)
 
 # Add the manipulation executable
 add_executable(manipulate

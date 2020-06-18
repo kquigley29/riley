@@ -10,8 +10,8 @@
 #include "../../opennn/opennn/opennn.h"
 
 
-#ifndef RILEY_NETWORK_H
-#define RILEY_NETWORK_H
+#ifndef RILEY_RILEYNET_H
+#define RILEY_RILEYNET_H
 
 
 class RileyNet {
@@ -48,4 +48,4 @@ private:
 };
 
 
-#endif //RILEY_NETWORK_H
+#endif //RILEY_RILEYNET_H
