@@ -173,7 +173,7 @@ OpenNN::Matrix<double> MediaProcessor::fetch_data_matrix() {
 
 void MediaProcessor::save_frames(const std::string& image_name) {
 
-    cv::VideoCapture capture(video_path);
+    cv::VideoCapture capture(path);
     int count = 0;
     cv::Mat frame;
     while (capture.read(frame)) {

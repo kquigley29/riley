@@ -23,8 +23,7 @@ __pycache__
 *.xml
 
 # binaries and executables
-*.bin
-*.exe
+bin/*
 
 # weights and backups
 .weights
