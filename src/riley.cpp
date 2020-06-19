@@ -3,19 +3,14 @@
 // ===============
 
 
-#define TRAINING_LOOP_LIMIT 5
-
-
 // Includes
 #include <iostream>
 #include <string>
 
-#include "manipulate/include/MediaProcessor.h"
+#include "manipulate/include/VideoProcessor.h"
+#include "manipulate/include/ImageProcessor.h"
 #include "network/include/RileyNet.h"
 //#include "darknet_riley/include/YoloObjectDetector.h"
-
-
-void invalid() {std::cout << "Invalid arguments!\n";}
 
 
 int main(int argc, char** argv) {
@@ -26,49 +21,4 @@ int main(int argc, char** argv) {
               << "L        EEEEE        T            sssssss        G    GG   O     O    !!! " << "\n"
               << "L        E            T                  s        G     G   O     O     !  " << "\n"
               << "LLLLLLL  EEEEEEE      T             sssss          GGGGG     OOOOO      0  " << "\n\n";
-
-    // Sort out the arguments
-    if (argc < 2) {invalid(); return 1;}
-    std::string method = argv[1];
-
-    if (method == "train") {
-        if (argc == 5) {
-
-            std::cout << "Training...\n";
-            std::string net_xml = argv[2];
-            std::string train_xml = argv[3];
-            std::string list_file_name = argv[4];
-            std::ifstream list_file(list_file_name);
-
-            for (int i = 0; i < TRAINING_LOOP_LIMIT; i++) {
-                RileyNet nn_1(net_xml, train_xml); /* Because Ryan likes numbers */
-                nn_1.print_architecture();
-
-                std::vector<std::string> data_mp4_names;
-                std::string list_file_line;
-                // Read the next line from File until it reaches the end.
-                while (std::getline(list_file, list_file_line)) {
-
-                    // Line contains string of length > 0 then save it in vector
-                    if (!list_file_line.empty())
-                        data_mp4_names.push_back(list_file_line);
-                }
-
-                for (const std::string &file_name : data_mp4_names) {
-
-                    // Train on the data from VideoProcessor::fetch_data_matrix
-                    MediaProcessor processor(file_name);
-                    OpenNN::Matrix<double> data = processor.fetch_data_matrix();
-                    nn_1.setup_and_train(data);
-                    std::cout << "Training complete on matrix!\n";
-                }
-            }
-
-            return 0;
-        }
-
-        invalid();
-    }
-
-    invalid();
 }
