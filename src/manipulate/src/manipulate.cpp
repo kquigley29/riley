@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
     std::cout << "WHIP IT UP\n";
 
-    if (argc <= 2) help();
+    if (argc <= 2) {help(); return 1;}
     std::string method = argv[1];
 
     if (method == "fetch") {
