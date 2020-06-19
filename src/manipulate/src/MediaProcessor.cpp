@@ -193,6 +193,8 @@ OpenNN::Matrix<int> MediaProcessor::fetch_data_matrix() {
 //        if (m > 255) m = 255;
 //        else if (m < 0) m = 0;
 //    }
+
+    std::cout << "data_matrix[15][10035]: " << data_matrix(15, 10035) << "\n";
     return data_matrix;
 }
 

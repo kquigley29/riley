@@ -67,7 +67,8 @@ int main(int argc, char** argv) {
             MediaProcessor processor(video_name);
             OpenNN::Matrix<int> data;
             data = processor.fetch_data_matrix();
-            data.print();
+            std::cout << "data 15 10035: " << data(15, 10035) << "\n";
+//            data.print();
 
             return 0;
         }
