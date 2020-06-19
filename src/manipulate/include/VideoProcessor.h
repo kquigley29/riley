@@ -6,12 +6,7 @@
 
 // Includes
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
-#include <vector>
-#include <random>
-#include <cmath>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
@@ -30,10 +25,11 @@ public:
     virtual ~VideoProcessor();
 
     // Member functions
+    int get_target() const;
     std::string get_path();
-    void set_path();
+    void set_path(const std::string&);
     OpenNN::Matrix<double_t> get_random_data_matrix();
-    void collect_frames();
+    void collect_frames(const std::string&);
 
 
 private:

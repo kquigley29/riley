@@ -18,11 +18,9 @@ VideoProcessor::VideoProcessor(const string & file_path) {
     target = std::stoi(file_path.substr(18, 2));
 }
 
-
-std::string VideoProcessor::get_path() {
-
-    return path;
-}
+int VideoProcessor::get_target() const {return target;}
+std::string VideoProcessor::get_path() {return path;}
+void VideoProcessor::set_path(const std::string &new_path) {path = new_path;}
 
 
 OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
@@ -93,6 +91,22 @@ OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
     }
 
     return data_matrix;
+}
+
+
+void VideoProcessor::collect_frames(const std::string &image_dir) {
+
+    // Capture the image
+    cv::VideoCapture cap(path);
+    cv::Mat frame;
+    int frame_count = 0;
+
+    // Write each frame to the give directory
+    while (cap.read(frame)) {
+        std::string image_path = image_dir + "/" + path.substr(12,8) + "_" + to_string(frame_count) + ".jpg";
+        cv::imwrite(image_path, frame);
+        frame_count++;
+    }
 }
 
 
