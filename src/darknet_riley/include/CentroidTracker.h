@@ -19,27 +19,25 @@
 #define RILEY_CENTROIDTRACKER_H
 
 
-typedef struct {
-    double x, y;
-    int id;
-} centroid;
-
-
 class CentroidTracker {
 public:
     explicit CentroidTracker(int);
     ~CentroidTracker();
 
+    std::vector<std::pair<int, std::pair<double, double>>> update(detection*, const int&);
+    void feynman();
+    void bohr();
+
+private:
     void register_object(int, int);
     void deregister_object(int);
-    std::vector<std::pair<int, std::pair<int, int>>> update(const std::vector<std::vector<int>>&);
 
-    std::vector<std::pair<int, std::pair<int, int>>> objects; // < id, <x, y> >
-    std::map<int, std::vector<std::pair<int, int>>> path_keeper;
-private:
+    std::vector<std::pair<int, std::pair<double, double>>> objects;
+    std::map<int, std::vector<std::pair<double, double>>> path_keeper;
+    std::map<int, int> disappeared;
     int max_disappeared;
     int next_object_id;
-    std::map<int, int> disappeared;
+    float r = 50;
 
     static double calc_distance(double, double, double, double);
 };

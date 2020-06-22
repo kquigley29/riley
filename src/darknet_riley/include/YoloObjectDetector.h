@@ -38,7 +38,7 @@ public:
 
 private:
     void *fetch_in_thread();
-    void *detect_in_thread();
+    void *detect_in_thread(CentroidTracker*);
     void *display_in_thread();
 
     static int size_network(network*);
@@ -47,8 +47,9 @@ private:
 
     static void *open_video_stream(char*);
     static image get_image_from_stream(void*);
-    static void make_window(char*, int, int);
-    
+    static image mat_to_image(const cv::Mat&);
+    static char *str_to_char_array(const std::string&);
+
     int detect_classes;
     char **detect_labels;
     image **detect_alphabet;
@@ -69,12 +70,10 @@ private:
     int buff_index = 0;
     float fps = 0;
     int running = 0;
-    CentroidTracker *tracker;
 };
 
 
-image mat_to_image(const cv::Mat&);
-char *str_to_char_array(const std::string&);
+
 void help();
 
 

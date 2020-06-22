@@ -8,7 +8,17 @@
 
 
 YoloObjectDetector::YoloObjectDetector(char *datacfg, char *cfg, char *weights) {
+    /*
+     YoloObjectDetector uses darknet to detect objects in a video.
+     datacfg is the config file containing the location of the class
+         names list file, numbers of classes and other info.
+     cfg is the network configuration file specifying the network
+         architecture.
+     weights is the weights file for the network.
 
+    This constructor sets up the darknet network and prepares the
+         network to make detections of the specified classes.
+     */
     std::cout << "guys, one of my beehives died :-(\n";
     std::cout << "                    ~ pjreddie\n";
 
@@ -28,7 +38,9 @@ YoloObjectDetector::YoloObjectDetector(char *datacfg, char *cfg, char *weights) 
 
 
 int YoloObjectDetector::size_network(network *net) {
-
+    /*
+     Returns the size of the network passed as the argument.
+     */
     int count = 0;
     for(int i = 0; i < net->n; ++i){
         layer l = net->layers[i];
@@ -41,7 +53,9 @@ int YoloObjectDetector::size_network(network *net) {
 
 
 void YoloObjectDetector::remember_network(network *net) {
-
+    /*
+     Saves the network passed as the argument to memory.
+     */
     int count = 0;
     for(int i = 0; i < net->n; ++i){
         layer l = net->layers[i];
@@ -54,6 +68,10 @@ void YoloObjectDetector::remember_network(network *net) {
 
 
 detection *YoloObjectDetector::avg_predictions(network *net, int *nboxes) {
+    /*
+     Gets the detections made by the network on a video frame.
+     Changes the nboxes value to be the number of bounding boxes.
+     */
     int i, j;
     int count = 0;
     fill_cpu(detect_total, 0, avg, 1);
@@ -73,7 +91,10 @@ detection *YoloObjectDetector::avg_predictions(network *net, int *nboxes) {
 
 
 void *YoloObjectDetector::fetch_in_thread() {
-
+    /*
+     Fetches a video frame in the thread created in the YoloObjectDetector::thread
+         function.
+     */
     free_image(buff[buff_index]);
     buff[buff_index] = get_image_from_stream(cap);
     if(buff[buff_index].data == nullptr) {
@@ -85,8 +106,14 @@ void *YoloObjectDetector::fetch_in_thread() {
 }
 
 
-void *YoloObjectDetector::detect_in_thread() {
-
+void *YoloObjectDetector::detect_in_thread(CentroidTracker* ct) {
+    /*
+     Detects objects in an image stored in the buffer and draws
+         the bounding boxes.
+     Uses the CentroidTracker class to calculate the angular and
+         linear velocities and accelerations of the detected
+         objects.
+     */
     running = 1;
     float nms = .4;
 
@@ -101,8 +128,6 @@ void *YoloObjectDetector::detect_in_thread() {
 
     if (nms > 0) do_nms_obj(dets, nboxes, l.classes, nms);
 
-    // Add centroid tracking here
-
     printf("\033[2J");
     printf("\033[1;1H");
     printf("\nFPS:%.1f\n",fps);
@@ -111,6 +136,10 @@ void *YoloObjectDetector::detect_in_thread() {
     draw_detections(display, dets, nboxes, detect_thresh, detect_labels, detect_alphabet, detect_classes);
     free_detections(dets, nboxes);
 
+    ct->update(dets, nboxes);
+    ct->feynman();
+    ct->bohr();
+
     detect_index = (detect_index + 1)%detect_frame;
     running = 0;
     return nullptr;
@@ -118,7 +147,9 @@ void *YoloObjectDetector::detect_in_thread() {
 
 
 void *YoloObjectDetector::display_in_thread() {
-
+    /*
+     Displays the images produced by YoloObjectDetector::detect_in_thread
+     */
     int c = show_image(buff[(buff_index + 1)%3], "Riley Detect", 1);
     if (c != -1) c = c%256;
     if (c == 27) {
@@ -140,7 +171,12 @@ void *YoloObjectDetector::display_in_thread() {
 
 
 void *YoloObjectDetector::detect(char *video_loc) {
-
+    /*
+     Calls the YoloObjectDetector::detect_in_thread and
+          YoloObjectDetector::fetch_in_thread functions
+          and runs them in separate threads.
+     Initiates the CentroidTracker object.
+     */
     set_batch_network(net, 1);
     std::thread detect_thread;
     std::thread fetch_thread;
@@ -166,6 +202,8 @@ void *YoloObjectDetector::detect(char *video_loc) {
     buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
     buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
 
+    auto *tracker = new CentroidTracker(50);
+
     int count = 0;
     detect_time = what_time_is_it_now();
 
@@ -174,7 +212,7 @@ void *YoloObjectDetector::detect(char *video_loc) {
         buff_index = (buff_index + 1) %3;
 
         fetch_thread = std::thread(&YoloObjectDetector::fetch_in_thread, this);
-        detect_thread = std::thread(&YoloObjectDetector::detect_in_thread, this);
+        detect_thread = std::thread(&YoloObjectDetector::detect_in_thread, this, tracker);
 
         fps = 1./(what_time_is_it_now() - detect_time);
         detect_time = what_time_is_it_now();
@@ -192,6 +230,10 @@ YoloObjectDetector::~YoloObjectDetector() = default;
 
 
 void *YoloObjectDetector::open_video_stream(char *url) {
+    /*
+     Opens the video stream from a url or file name.
+     Used to fetch video frames inYoloObjectDetector::fetch_in_thread.
+     */
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(url);
     if (!cap->isOpened()) return nullptr;
@@ -200,6 +242,11 @@ void *YoloObjectDetector::open_video_stream(char *url) {
 
 
 image YoloObjectDetector::get_image_from_stream(void *p) {
+    /*
+     Gets an image from the video stream.
+     If the image is empty an empty image is returned from
+         the darknet make_empty_image function
+     */
     auto *cap = (cv::VideoCapture *)p;
     cv::Mat m;
     *cap >> m;
@@ -208,13 +255,10 @@ image YoloObjectDetector::get_image_from_stream(void *p) {
 }
 
 
-void YoloObjectDetector::make_window(char *name, int width, int height) {
-    cv::namedWindow(name, cv::WINDOW_NORMAL);
-    cv::resizeWindow(name, width, height);
-}
-
-
-image mat_to_image(const cv::Mat& m) {
+image YoloObjectDetector::mat_to_image(const cv::Mat& m) {
+    /*
+     Converts an OpenCV Mat to a darknet image.
+     */
     int h = m.rows;
     int w = m.cols;
     int c = m.channels();
@@ -235,8 +279,10 @@ image mat_to_image(const cv::Mat& m) {
 }
 
 
-char *str_to_char_array(const std::string& str) {
-
+char *YoloObjectDetector::str_to_char_array(const std::string& str) {
+    /*
+     Converts a standard string to a character array.
+     */
     int n = str.length();
     char *char_array = (char*) malloc((n + 1) * sizeof(char));
     std::strcpy(char_array, str.c_str());
@@ -245,13 +291,19 @@ char *str_to_char_array(const std::string& str) {
 
 
 void help() {
-
+    /*
+     Prints help.
+     To be used in the main function to control command line
+         arguments.
+     */
     std::cout << "[Usage]\n"
               << "./yolo <data cgf> <cfg> <weights> <video or url>\n";
 }
 
 int main(int argc, char **argv) {
-
+    /*
+     Begins the detection with the given configuration.
+     */
     if (argc != 5) {help(); return 1;}
     char *data_cfg_file = argv[1];
     char *cfg_file = argv[2];
