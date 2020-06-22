@@ -52,6 +52,7 @@ if (CUDA_FOUND)
     # Add the darknet library
     cuda_add_library(darknet_riley_lib
             ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/CentroidTracker.cpp
 
             ${Darknet_DIR}/src/activation_layer.c        ${Darknet_DIR}/src/im2col.c
             ${Darknet_DIR}/src/activations.c             ${Darknet_DIR}/src/image.c
@@ -101,8 +102,8 @@ else()
 
     # Add the darknet_riley library
     add_library(darknet_riley_lib
-            src/YoloObjectDetector.cpp
-            src/image_interface.c
+            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/CentroidTracker.cpp
 
             ${DARKNET_PATH}/src/activation_layer.c        ${DARKNET_PATH}/src/im2col.c
             ${DARKNET_PATH}/src/activations.c             ${DARKNET_PATH}/src/image.c

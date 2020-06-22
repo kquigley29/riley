@@ -21,6 +21,9 @@
 #include "demo.h"
 #include <sys/time.h>
 
+#include "../include/CentroidTracker.h"
+
+
 
 #ifndef RILEY_YOLOOBJECTDETECTOR_H
 #define RILEY_YOLOOBJECTDETECTOR_H
@@ -31,9 +34,7 @@ public:
     explicit YoloObjectDetector(char*, char*, char*);
     virtual ~YoloObjectDetector();
 
-    // Member functions
     void *detect(char*);
-    double *feynman(detection*);
 
 private:
     void *fetch_in_thread();
@@ -43,7 +44,7 @@ private:
     static int size_network(network*);
     void remember_network(network*);
     detection *avg_predictions(network*, int*);
-    
+
     static void *open_video_stream(char*);
     static image get_image_from_stream(void*);
     static void make_window(char*, int, int);
@@ -51,7 +52,7 @@ private:
     int detect_classes;
     char **detect_labels;
     image **detect_alphabet;
-    
+
     network *net;
     int detect_total;
     int detect_frame = 3;
@@ -68,12 +69,11 @@ private:
     int buff_index = 0;
     float fps = 0;
     int running = 0;
+    CentroidTracker *tracker;
 };
 
 
 image mat_to_image(const cv::Mat&);
-
-
 char *str_to_char_array(const std::string&);
 void help();
 

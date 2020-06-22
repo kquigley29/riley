@@ -101,6 +101,8 @@ void *YoloObjectDetector::detect_in_thread() {
 
     if (nms > 0) do_nms_obj(dets, nboxes, l.classes, nms);
 
+    // Add centroid tracking here
+
     printf("\033[2J");
     printf("\033[1;1H");
     printf("\nFPS:%.1f\n",fps);
@@ -155,7 +157,7 @@ void *YoloObjectDetector::detect(char *video_loc) {
     std::cout << "Open video stream\n";
 
     cap = open_video_stream(video_loc);
-    if(!cap) error("Couldn't connect to webcam.\n");
+    if(!cap) error("Couldn't connect to video source.\n");
 
     buff[0] = get_image_from_stream(cap);
     buff[1] = copy_image(buff[0]);
@@ -186,13 +188,9 @@ void *YoloObjectDetector::detect(char *video_loc) {
 }
 
 
-double *YoloObjectDetector::feynman(detection *dets) {}
-
-
 YoloObjectDetector::~YoloObjectDetector() = default;
 
 
-// Helper functions similar to those in darknet/src/image_opencv.cpp
 void *YoloObjectDetector::open_video_stream(char *url) {
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(url);
