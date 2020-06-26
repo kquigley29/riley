@@ -15,26 +15,26 @@ else()
     list(APPEND LIBRARIES "m")
 endif()
 find_package(OpenCV REQUIRED)
-set(OpenNN_DIR ${CMAKE_SOURCE_DIR}/src/opennn/opennn)
-set(Darknet_DIR ${CMAKE_SOURCE_DIR}/src/darknet)
+set(OpenNN_DIR ${CMAKE_SOURCE_DIR}/opennn/opennn)
+set(Darknet_DIR ${CMAKE_SOURCE_DIR}/darknet)
 
 add_definitions(-DOPENCV)
 
 # Set all binaries to be placed in riley
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../bin)
 
 # Include all the include directories
 include_directories(
-        ${CMAKE_SOURCE_DIR}/src/manipulate/include
-        ${CMAKE_SOURCE_DIR}/src/network/include
+        ${CMAKE_SOURCE_DIR}/manipulate/include
+        ${CMAKE_SOURCE_DIR}/network/include
         ${OpenNN_DIR}
         ${Darknet_DIR}/include
         ${Darknet_DIR}/src)
 
 # Add the manipulate library
 add_library(manipulate_lib
-        ${CMAKE_SOURCE_DIR}/src/manipulate/src/VideoProcessor.cpp
-        ${CMAKE_SOURCE_DIR}/src/manipulate/src/ImageProcessor.cpp)
+        ${CMAKE_SOURCE_DIR}/manipulate/src/VideoProcessor.cpp
+        ${CMAKE_SOURCE_DIR}/manipulate/src/ImageProcessor.cpp)
 target_link_libraries(manipulate_lib
         ${OpenCV_LIBS})
 
@@ -43,7 +43,7 @@ link_directories(
         ${OpenNN_DIR})
 add_subdirectory(${OpenNN_DIR})
 add_library(network_lib
-        ${CMAKE_SOURCE_DIR}/src/network/src/RileyNet.cpp)
+        ${CMAKE_SOURCE_DIR}/network/src/RileyNet.cpp)
 target_link_libraries(network_lib
         opennn_lib)
 
@@ -51,8 +51,8 @@ if (CUDA_FOUND)
     link_directories(/usr/local/cua/lib64)
     # Add the darknet library
     cuda_add_library(darknet_riley_lib
-            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp
-            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/CentroidTracker.cpp
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/CentroidTracker.cpp
 
             ${Darknet_DIR}/src/activation_layer.c        ${Darknet_DIR}/src/im2col.c
             ${Darknet_DIR}/src/activations.c             ${Darknet_DIR}/src/image.c
@@ -93,17 +93,17 @@ if (CUDA_FOUND)
             curand
             ${OpenCV_LIBS})
     # Add the yolo executable
-    cuda_add_executable(bin/yolo
-            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp)
-    target_link_libraries(bin/yolo
+    cuda_add_executable(yolo
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/YoloObjectDetector.cpp)
+    target_link_libraries(yolo
             darknet_riley_lib)
 
 else()
 
     # Add the darknet_riley library
     add_library(darknet_riley_lib
-            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp
-            ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/CentroidTracker.cpp
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/CentroidTracker.cpp
 
             ${DARKNET_PATH}/src/activation_layer.c        ${DARKNET_PATH}/src/im2col.c
             ${DARKNET_PATH}/src/activations.c             ${DARKNET_PATH}/src/image.c
@@ -134,22 +134,23 @@ else()
             stdc++
             ${OpenCV_LIBS})
     # Add the yolo executable
-    add_executable(bin/yolo
-            src/YoloObjectDetector.cpp)
-    target_link_libraries(bin/yolo
+    add_executable(yolo
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/darknet_riley/src/CentroidTracker.cpp)
+    target_link_libraries(yolo
             darknet_riley_lib)
 
 endif()
 
 # Add the riley executable
 add_executable(riley
-        ${CMAKE_SOURCE_DIR}/src/riley.cpp)
+        ${CMAKE_SOURCE_DIR}/riley.cpp)
 target_link_libraries(riley
         manipulate_lib
         network_lib)
 
 # Add the manipulation executable
 add_executable(manipulate
-        ${CMAKE_SOURCE_DIR}/src/manipulate/src/manipulate.cpp)
+        ${CMAKE_SOURCE_DIR}/manipulate/src/manipulate.cpp)
 target_link_libraries(manipulate
         manipulate_lib)

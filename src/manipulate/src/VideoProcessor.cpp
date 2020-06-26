@@ -54,7 +54,7 @@ OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
     int num_frames = cap->get(cv::CAP_PROP_FRAME_COUNT);
     int rand_num = (rand() % num_frames) - RANDOM_NUMBER_BUFFER_;
     int frame_count = 0;
-    while (frame_count != rand_num) {cap.read(frame); frame_count++;}
+    while (frame_count != rand_num) {cap->read(frame); frame_count++;}
 
     // Set the frame size for the images
     // Collect the rgb data from the frames
