@@ -33,6 +33,7 @@ public:
 
 
 private:
+    cv::VideoCapture *cap;
     std::string path;
     int target;
 

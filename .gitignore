@@ -24,9 +24,5 @@ __pycache__
 # networks, training startegies and params
 *.xml
 
-# binaries and executables
-bin
-
 # weights and backups
-*.weights
-*.backup
+weights

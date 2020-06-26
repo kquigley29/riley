@@ -8,14 +8,28 @@
 
 
 CentroidTracker::CentroidTracker(int max_disappeared) {
-
+    /*
+     CentroidTracker tracks object centroids passed it as darknet detections.
+     The objects are tracked by recording the path taken by each objects. An
+          object is assumed to be the same object in consecutive frames in
+          the basis that objects will not move extreme distances within the
+          time of one frame passing. Therefore the closest pairs, one from
+          each frame, are taken to be the same object.
+     The information from the paths is used to estimate the angular and
+          linear movements of the tracked objects.
+     Objects are forgotten once they have been out of sight for longer than
+          a consecutive number of frames given by max_disappeared.
+     */
     this->next_object_id = 0;
     this->max_disappeared = max_disappeared;
 }
 
 
 double CentroidTracker::calc_distance(double x1, double y1, double x2, double y2) {
-
+    /*
+     Calculate the euclidean distance between two points in the plane of
+         the image.
+     */
     double x = x1 - x2;
     double y = y1 - y2;
     double dist = sqrt((x * x) + (y * y));
@@ -25,7 +39,9 @@ double CentroidTracker::calc_distance(double x1, double y1, double x2, double y2
 
 
 void CentroidTracker::register_object(int cX, int cY) {
-
+    /*
+     Register a centroid for object tracking.
+     */
     int object_id = this->next_object_id;
     this->objects.push_back({object_id, {cX, cY}});
     this->disappeared.insert({object_id, 0});
@@ -34,7 +50,9 @@ void CentroidTracker::register_object(int cX, int cY) {
 
 
 void CentroidTracker::deregister_object(int object_id) {
-
+    /*
+     Deregister a lost centroid from object tracking.
+     */
     std::cout << "Deregistered object: " << object_id << "\n";
     if (!this->objects.empty()) {
         for (int i = 0; i < this->objects.size(); i++) {
@@ -49,7 +67,9 @@ void CentroidTracker::deregister_object(int object_id) {
 
 
 std::vector<float>::size_type findMin(const std::vector<float> &v, std::vector<float>::size_type pos = 0) {
-
+    /*
+     Find the minimum value in a vector.
+     */
     if (v.size() <= pos) return (v.size());
     std::vector<float>::size_type min = pos;
     for (std::vector<float>::size_type i = pos + 1; i < v.size(); i++) {
@@ -61,7 +81,11 @@ std::vector<float>::size_type findMin(const std::vector<float> &v, std::vector<f
 
 
 void CentroidTracker::feynman() {
-
+    /*
+     Calculate the angular velocity and acceleration of a tracked object.
+     Done in the image plane and therefore unreliable if the object
+          movements are not orthogonal to the lense.
+     */
     if (!objects.empty()) {
         for (auto obj : objects) {
             std::vector<std::pair<double, double>> positions = path_keeper[obj.first];
@@ -92,7 +116,11 @@ void CentroidTracker::feynman() {
 
 
 void CentroidTracker::bohr() {
-
+    /*
+     Calculate the linear velocity and acceleration of a tracked object.
+     Done in the image plane and therefore unreliable if the object
+          movements are not orthogonal to the lense.
+     */
     if (!objects.empty()) {
         for (auto obj : objects) {
             std::vector<std::pair<double, double>> positions = path_keeper[obj.first];
@@ -120,7 +148,11 @@ void CentroidTracker::bohr() {
 
 
 std::vector<std::pair<int, std::pair<double, double>>> CentroidTracker::update(detection *dets, const int &num_dets) {
-
+    /*
+     Updates the positions of the detected objects and records if an object has
+         disappeared from view.
+     Records the path of all objects being tracked.
+     */
     std::cout << "Number of detections: " << num_dets << "\n";
 
     if (num_dets == 0) {

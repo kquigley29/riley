@@ -1,2 +1,2 @@
 classes = 80
-labels = cfg/coco.list
+labels = data/coco/coco.list

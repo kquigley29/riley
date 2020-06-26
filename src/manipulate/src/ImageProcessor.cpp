@@ -11,27 +11,21 @@ ImageProcessor::ImageProcessor(const std::string &file_path) {
 
     // Find and assign the values of class label and number
     // Set the path
-    int uscore = file_path.find("_");
-    int dot = file_path.find(".");
-    int len = dot - uscore;
-
     path = file_path;
-    class_label = file_path.substr(uscore+1, len);
-    class_number = std::stoi(file_path.substr(0,uscore-1));
 }
 
 
-std::string ImageProcessor::get_class_label() {return class_label;}
-int ImageProcessor::get_class_number() {return class_number;}
+std::string ImageProcessor::get_path() {return path;}
+void ImageProcessor::set_path(const std::string &new_path) {path = new_path;}
 
 
-void ImageProcessor::resize(const int &width, const int &height) {
-
+void ImageProcessor::resize(const int &width, const int &height, std::string new_path, const int &count, const std::string &image_class) {
     cv::Mat image;
     image = cv::imread(path);
     cv::Size image_size(width, height);
     cv::resize(image, image, image_size);
-    cv::imwrite(path, image);
+    new_path = new_path + "/" + std::to_string(count) + "_" + image_class + ".jpg";
+    cv::imwrite(new_path, image);
 }
 
 

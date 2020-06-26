@@ -11,10 +11,9 @@
 #include <iostream>
 #include <string>
 
-#include "manipulate/include/VideoProcessor.h"
-#include "manipulate/include/ImageProcessor.h"
-#include "network/include/RileyNet.h"
-//#include "darknet_riley/include/YoloObjectDetector.h"
+#include <manipulate.h>
+#include <RileyNet.h>
+//#include <darknet_riley.h>
 
 
 void help() {

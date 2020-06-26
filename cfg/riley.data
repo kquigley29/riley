@@ -1,6 +1,5 @@
 classes=3
 train = data/riley/train.list
 valid = data/riley/test.list
-labels = data/riley/labels.txt
+names = data/riley/labels.txt
 backup = weights/backup/
-top=2

@@ -93,9 +93,9 @@ if (CUDA_FOUND)
             curand
             ${OpenCV_LIBS})
     # Add the yolo executable
-    cuda_add_executable(yolo
+    cuda_add_executable(bin/yolo
             ${CMAKE_SOURCE_DIR}/src/darknet_riley/src/YoloObjectDetector.cpp)
-    target_link_libraries(yolo
+    target_link_libraries(bin/yolo
             darknet_riley_lib)
 
 else()
@@ -134,9 +134,9 @@ else()
             stdc++
             ${OpenCV_LIBS})
     # Add the yolo executable
-    add_executable(yolo
+    add_executable(bin/yolo
             src/YoloObjectDetector.cpp)
-    target_link_libraries(yolo
+    target_link_libraries(bin/yolo
             darknet_riley_lib)
 
 endif()

@@ -13,9 +13,9 @@ VideoProcessor::VideoProcessor(const string & file_path) {
     std::cout << "<<LOAD IT UP>>\n";
 
     // Set path to the file path
-    // Get the target number
     path = file_path;
-    target = std::stoi(file_path.substr(18, 2));
+    cap = new cv::VideoCapture(path);
+    // TODO: initialise the target
 }
 
 int VideoProcessor::get_target() const {return target;}
@@ -27,7 +27,7 @@ OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
 
     // Initialise a matrix to store the data and populate the target columns
     OpenNN::Matrix<double_t> data_matrix(3*NUM_FRAMES_OF_DATA_,
-                                            VIDEO_FRAME_WIDTH_*VIDEO_FRAME_HEIGHT_ + NUM_WHEEL_POCKETS_);
+                                       VIDEO_FRAME_WIDTH_*VIDEO_FRAME_HEIGHT_ + NUM_WHEEL_POCKETS_);
 
     // Populate the matrix with the target data
     int target_index = permute_wheel(target);
@@ -50,9 +50,8 @@ OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
 
     // Capture the video
     // Find a random frame to start at and skip all preceding frames
-    cv::VideoCapture cap(path);
     cv::Mat frame;
-    int num_frames = cap.get(cv::CAP_PROP_FRAME_COUNT);
+    int num_frames = cap->get(cv::CAP_PROP_FRAME_COUNT);
     int rand_num = (rand() % num_frames) - RANDOM_NUMBER_BUFFER_;
     int frame_count = 0;
     while (frame_count != rand_num) {cap.read(frame); frame_count++;}
@@ -63,7 +62,7 @@ OpenNN::Matrix<double_t> VideoProcessor::get_random_data_matrix() {
     for (int i = 0; i != NUM_FRAMES_OF_DATA_; i++) {
 
         // Resize the frame and adjust colour scheme
-        cap.read(frame);
+        cap->read(frame);
         cv::resize(frame, frame, frame_size);
         cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
 

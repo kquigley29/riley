@@ -97,7 +97,7 @@ void *YoloObjectDetector::fetch_in_thread() {
      */
     free_image(buff[buff_index]);
     buff[buff_index] = get_image_from_stream(cap);
-    if(buff[buff_index].data == nullptr) {
+    if (buff[buff_index].data == nullptr) {
         detect_done = 1;
         return nullptr;
     }

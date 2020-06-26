@@ -23,15 +23,12 @@ public:
     virtual ~ImageProcessor();
 
     // Member functions
-    std::string get_class_label();
-    int get_class_number();
-    void resize(const int&, const int&);
+    std::string get_path();
+    void set_path(const std::string&);
+    void resize(const int&, const int&, std::string, const int&, const std::string&);
 
 private:
     std::string path;
-    std::string class_label;
-    int class_number;
-
 };
 
 
