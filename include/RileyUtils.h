@@ -23,5 +23,4 @@ void *open_video_stream_from_link(const char *link);
 image retrieve_image_from_stream(void *p);
 
 
-
 #endif //RILEY_UTILS_H
