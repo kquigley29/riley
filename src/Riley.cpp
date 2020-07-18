@@ -18,12 +18,7 @@ void help() {
 int main(int argc, char** argv) {
 
     std::cout << "Yessir."       << "\n\n"
-              << "L        EEEEEEE   TTTTTTT   ,,,    sssss          GGGGG     OOOOO    !!!!!" << "\n"
-              << "L        E            T       ,    s     s        G     G   O     O   !!!!!" << "\n"
-              << "L        EEEEE        T            s              G         O     O    !!! " << "\n"
-              << "L        EEEEE        T            sssssss        G    GG   O     O    !!! " << "\n"
-              << "L        E            T                  s        G     G   O     O     !  " << "\n"
-              << "LLLLLLL  EEEEEEE      T             sssss          GGGGG     OOOOO      0  " << "\n\n";
+              << "Let's go!";
 
     auto yolo = "yolo";
     if (strcmp(argv[1], yolo) == 0 && argc == 5) {

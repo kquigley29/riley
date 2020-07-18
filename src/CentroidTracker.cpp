@@ -15,11 +15,11 @@ CentroidTracker::CentroidTracker(int max_disappeared) {
           the basis that objects will not move extreme distances within the
           time of one frame passing. Therefore the closest pairs, one from
           each frame, are taken to be the same object.
-     The information from the paths is used to estimate the angular and
-          linear movements of the tracked objects.
      Objects are forgotten once they have been out of sight for longer than
           a consecutive number of frames given by max_disappeared.
      */
+    std::cout << "Onwards and upwards.";
+
     this->next_object_id = 0;
     this->max_disappeared = max_disappeared;
 }
@@ -81,6 +81,10 @@ std::vector<float>::size_type findMin(const std::vector<float> &v, std::vector<f
 
 
 void CentroidTracker::draw_trace(image &img) {
+    /*
+     Plot the points contained in path_keeper.
+     Traces a line showing the movement of all centroids.
+     */
     if (!objects.empty()){
         for (auto obj: objects) {
             auto coordinates = path_keeper[obj.first];

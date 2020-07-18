@@ -1,12 +1,15 @@
-// ==========================
-// darknet_riley utils source
-// ==========================
+// =================
+// RileyUtils Source
+// =================
 
 
 #include "RileyUtils.h"
 
 
 cv::Mat image_to_mat(const image &img) {
+    /*
+     Converts a darknet image to an OpenCV Mat.
+     */
     assert(img.c == 3 || img.c == 1);
     int x, y, c;
     image copy = copy_image(img);
@@ -58,4 +61,56 @@ char *str_to_char_array(const std::string &str) {
     char *char_array = (char *) malloc((n + 1) * sizeof(char));
     std::strcpy(char_array, str.c_str());
     return char_array;
+}
+
+void *open_video_stream_from_camera(const int &index) {
+    /*
+     Opens the video stream from a camera.
+     Used to fetch video frames in YoloObjectDetector::fetch_in_thread.
+     */
+    cv::VideoCapture *cap;
+    cap = new cv::VideoCapture(index);
+    if (!cap->isOpened()) return nullptr;
+    else return (void *)cap;
+}
+
+
+int size_network(network *net) {
+    /*
+     Returns the size of the network passed as the argument.
+     */
+    int count = 0;
+    for(int i = 0; i < net->n; ++i){
+        layer l = net->layers[i];
+        if(l.type == YOLO || l.type == REGION || l.type == DETECTION){
+            count += l.outputs;
+        }
+    }
+    return count;
+}
+
+
+void *open_video_stream_from_link(const char *link) {
+    /*
+     Opens the video stream from a url or file name.
+     Used to fetch video frames in YoloObjectDetector::detect.
+     */
+    cv::VideoCapture *cap;
+    cap = new cv::VideoCapture(link);
+    if (!cap->isOpened()) return nullptr;
+    else return (void *)cap;
+}
+
+
+image get_image_from_stream(void *p) {
+    /*
+     Gets an image from the video stream.
+     If the image is empty an empty image is returned from
+         the darknet make_empty_image function
+     */
+    auto *cap = (cv::VideoCapture *)p;
+    cv::Mat m;
+    *cap >> m;
+    if(m.empty()) return make_empty_image(0,0,0);
+    return mat_to_image(m);
 }

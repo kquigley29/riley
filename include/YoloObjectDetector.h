@@ -32,13 +32,8 @@ private:
     void *detect_in_thread();
     void *display_in_thread();
 
-    static int size_network(network *net);
     void remember_network(network *net);
     detection *avg_predictions(network *net, int *nboxes);
-
-    static void *open_video_stream_from_camera(const int &index);
-    static void *open_video_stream_from_link(const char *video);
-    static image get_image_from_stream(void *p);
 
     int detect_classes;
     char **detect_labels;
