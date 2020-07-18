@@ -20,7 +20,7 @@ int size_network(network *net);
 
 void *open_video_stream_from_camera(const int &index);
 void *open_video_stream_from_link(const char *link);
-image get_image_from_stream(void *p);
+image retrieve_image_from_stream(void *p);
 
 
 

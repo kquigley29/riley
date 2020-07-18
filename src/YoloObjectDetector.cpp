@@ -83,7 +83,7 @@ void *YoloObjectDetector::fetch_in_thread() {
          function.
      */
     free_image(this->buff[this->buff_index]);
-    this->buff[this->buff_index] = get_image_from_stream(this->cap);
+    this->buff[this->buff_index] = retrieve_image_from_stream(this->cap);
     if (this->buff[this->buff_index].data == nullptr) {
         this->detect_done = 1;
         return nullptr;
@@ -187,7 +187,7 @@ void *YoloObjectDetector::detect(const char *video, const int &index) {
     }
     if(!this->cap) error("Couldn't connect to video source.\n");
 
-    this->buff[0] = get_image_from_stream(this->cap);
+    this->buff[0] = retrieve_image_from_stream(this->cap);
     this->buff[1] = copy_image(this->buff[0]);
     this->buff[2] = copy_image(this->buff[0]);
     this->buff_letter[0] = letterbox_image(this->buff[0], this->net->w, this->net->h);

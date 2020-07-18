@@ -102,7 +102,7 @@ void *open_video_stream_from_link(const char *link) {
 }
 
 
-image get_image_from_stream(void *p) {
+image retrieve_image_from_stream(void *p) {
     /*
      Gets an image from the video stream.
      If the image is empty an empty image is returned from
