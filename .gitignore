@@ -5,24 +5,11 @@
 
 # development directories
 cmake-build-debug
-bin
 build
-venv
 
-# open source directories
-opennn
-
-# auto-compiled files/folders
-__pycache__
-
-# videos, images and data
-*.mp4
-*.jpg
-*.jpeg
-*.png
-
-# networks, training startegies and params
-*.xml
-
-# weights and backups
+# darknet
 weights
+labels
+
+# binaries and executables
+./riley

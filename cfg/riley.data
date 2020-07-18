@@ -1,5 +1,0 @@
-classes=3
-train = data/riley/train.list
-valid = data/riley/test.list
-names = data/riley/labels.txt
-backup = weights/backup/

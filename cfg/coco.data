@@ -1,2 +1,2 @@
 classes = 80
-labels = data/coco/coco.list
+labels = data/coco.list
