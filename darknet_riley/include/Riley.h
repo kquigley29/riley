@@ -2,8 +2,8 @@
 // Riley Include File
 // ==================
 
-#include <CentroidTracker.h>
-#include <ObjectDetector.h>
+#include "CentroidTracker.h"
+#include "ObjectDetector.h"
 
 #ifndef RILEY_RILEY_H
 #define RILEY_RILEY_H

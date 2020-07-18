@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <thread>
 #include <darknet.h>
-#include <RileyUtils.h>
+#include "RileyUtils.h"
 
 
 #ifndef RILEY_CENTROIDTRACKER_H

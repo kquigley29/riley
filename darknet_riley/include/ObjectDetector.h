@@ -11,8 +11,8 @@
 #include <opencv2/opencv.hpp>
 #include <darknet.h>
 #include <demo.h>
-#include <CentroidTracker.h>
-#include <RileyUtils.h>
+#include "CentroidTracker.h"
+#include "RileyUtils.h"
 
 
 

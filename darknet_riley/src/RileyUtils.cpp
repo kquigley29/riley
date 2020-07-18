@@ -63,17 +63,6 @@ char *str_to_char_array(const std::string &str) {
     return char_array;
 }
 
-void *open_video_stream_from_camera(const int &index) {
-    /*
-     Opens the video stream from a camera.
-     Used to fetch video frames in ObjectDetector::fetch_in_thread.
-     */
-    cv::VideoCapture *cap;
-    cap = new cv::VideoCapture(index);
-    if (!cap->isOpened()) return nullptr;
-    else return (void *)cap;
-}
-
 
 int size_network(network *net) {
     /*
@@ -87,6 +76,18 @@ int size_network(network *net) {
         }
     }
     return count;
+}
+
+
+void *open_video_stream_from_camera(const int &index) {
+    /*
+     Opens the video stream from a camera.
+     Used to fetch video frames in ObjectDetector::fetch_in_thread.
+     */
+    cv::VideoCapture *cap;
+    cap = new cv::VideoCapture(index);
+    if (!cap->isOpened()) return nullptr;
+    else return (void *)cap;
 }
 
 
