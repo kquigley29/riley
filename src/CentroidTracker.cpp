@@ -126,7 +126,7 @@ void CentroidTracker::feynman(const int &w, const int &h) {
                 double omega = (omega2 + omega1) / 2.;
                 double alpha = (omega2 - omega1) / 2.;
 
-                if (omega != 0 || alpha != 0) {
+                if (abs(omega) >= 0.3 || abs(alpha) >= 0.1) {
                     std::cout << "Object " << obj.first << " omega: " << omega << "\n";
                     std::cout << "Object " << obj.first << " alpha: " << alpha << "\n";
                 }
@@ -158,7 +158,7 @@ void CentroidTracker::bohr(const int &w, const int &h) {
                 double v = (v2 + v1) / 2;
                 double a = (v2 - v1) / 2;
 
-                if (v >= 0.05 || a >= 0.05) {
+                if (abs(v) >= 2 || abs(a) >= 1) {
                     std::cout << "Object " << obj.first << " v: " << v << "\n";
                     std::cout << "Object " << obj.first << " a: " << a << "\n";
                 }
