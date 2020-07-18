@@ -32,7 +32,7 @@ if (CUDA_FOUND)
     link_directories(/usr/local/cua/lib64)
     # Add the darknet library
     cuda_add_library(darknet_riley
-            ${CMAKE_SOURCE_DIR}/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/ObjectDetector.cpp
             ${CMAKE_SOURCE_DIR}/CentroidTracker.cpp
             ${CMAKE_SOURCE_DIR}/RileyUtils.cpp
 
@@ -79,7 +79,7 @@ else()
 
     # Add the darknet_riley library
     add_library(darknet_riley
-            ${CMAKE_SOURCE_DIR}/YoloObjectDetector.cpp
+            ${CMAKE_SOURCE_DIR}/ObjectDetector.cpp
             ${CMAKE_SOURCE_DIR}/CentroidTracker.cpp
             ${CMAKE_SOURCE_DIR}/RileyUtils.cpp
 

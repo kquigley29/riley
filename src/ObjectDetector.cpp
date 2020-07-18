@@ -1,15 +1,15 @@
 // =========================
-// YoloObjectDetector Source
+// ObjectDetector Source
 // Detect objects. Fast
 // =========================
 
 
-#include <YoloObjectDetector.h>
+#include <ObjectDetector.h>
 
 
-YoloObjectDetector::YoloObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit) {
+ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit) {
     /*
-     YoloObjectDetector uses darknet to detect objects in a video.
+     ObjectDetector uses darknet to detect objects in a video.
      data_cfg is the config file containing the location of the class
          names list file, numbers of classes and other info.
      cfg is the network configuration file specifying the network
@@ -39,7 +39,7 @@ YoloObjectDetector::YoloObjectDetector(char *data_cfg, char *cfg, char *weights,
 }
 
 
-void YoloObjectDetector::remember_network(network *net) {
+void ObjectDetector::remember_network(network *net) {
     /*
      Saves the network passed as the argument to memory.
      */
@@ -54,7 +54,7 @@ void YoloObjectDetector::remember_network(network *net) {
 }
 
 
-detection *YoloObjectDetector::avg_predictions(network *net, int *nboxes) {
+detection *ObjectDetector::avg_predictions(network *net, int *nboxes) {
     /*
      Gets the detections made by the network on a video frame.
      Changes the nboxes value to be the number of bounding boxes.
@@ -77,9 +77,9 @@ detection *YoloObjectDetector::avg_predictions(network *net, int *nboxes) {
 }
 
 
-void *YoloObjectDetector::fetch_in_thread() {
+void *ObjectDetector::fetch_in_thread() {
     /*
-     Fetches a video frame in the thread created in the YoloObjectDetector::thread
+     Fetches a video frame in the thread created in the ObjectDetector::thread
          function.
      */
     free_image(this->buff[this->buff_index]);
@@ -93,7 +93,7 @@ void *YoloObjectDetector::fetch_in_thread() {
 }
 
 
-void *YoloObjectDetector::detect_in_thread() {
+void *ObjectDetector::detect_in_thread() {
     /*
      Detects objects in an image stored in the buffer and draws
          the bounding boxes.
@@ -133,9 +133,9 @@ void *YoloObjectDetector::detect_in_thread() {
 }
 
 
-void *YoloObjectDetector::display_in_thread() {
+void *ObjectDetector::display_in_thread() {
     /*
-     Displays the images produced by YoloObjectDetector::detect_in_thread
+     Displays the images produced by ObjectDetector::detect_in_thread
      */
     int c = show_image(this->buff[(this->buff_index + 1)%3], "Riley", 1);
     if (c != -1) c = c%256;
@@ -157,10 +157,10 @@ void *YoloObjectDetector::display_in_thread() {
 }
 
 
-void *YoloObjectDetector::detect(const char *video, const int &index) {
+void *ObjectDetector::detect(const char *video, const int &index) {
     /*
-     Calls the YoloObjectDetector::detect_in_thread and
-          YoloObjectDetector::fetch_in_thread functions
+     Calls the ObjectDetector::detect_in_thread and
+          ObjectDetector::fetch_in_thread functions
           and runs them in separate threads.
      Initiates the CentroidTracker object.
      */
@@ -201,8 +201,8 @@ void *YoloObjectDetector::detect(const char *video, const int &index) {
 
         this->buff_index = (this->buff_index + 1) %3;
 
-        fetch_thread = std::thread(&YoloObjectDetector::fetch_in_thread, this);
-        detect_thread = std::thread(&YoloObjectDetector::detect_in_thread, this);
+        fetch_thread = std::thread(&ObjectDetector::fetch_in_thread, this);
+        detect_thread = std::thread(&ObjectDetector::detect_in_thread, this);
 
         this->fps = 1./(what_time_is_it_now() - this->detect_time);
         this->detect_time = what_time_is_it_now();
@@ -216,4 +216,4 @@ void *YoloObjectDetector::detect(const char *video, const int &index) {
 }
 
 
-YoloObjectDetector::~YoloObjectDetector() = default;
+ObjectDetector::~ObjectDetector() = default;

@@ -1,5 +1,5 @@
 // =========================
-// YoloObjectDetector Header
+// ObjectDetector Header
 // Detect objects. Fast
 // =========================
 
@@ -20,10 +20,10 @@
 #define RILEY_YOLOOBJECTDETECTOR_H
 
 
-class YoloObjectDetector {
+class ObjectDetector {
 public:
-    explicit YoloObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
-    virtual ~YoloObjectDetector();
+    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
+    virtual ~ObjectDetector();
 
     void *detect(const char *video, const int &index);
 

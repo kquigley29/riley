@@ -66,7 +66,7 @@ char *str_to_char_array(const std::string &str) {
 void *open_video_stream_from_camera(const int &index) {
     /*
      Opens the video stream from a camera.
-     Used to fetch video frames in YoloObjectDetector::fetch_in_thread.
+     Used to fetch video frames in ObjectDetector::fetch_in_thread.
      */
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(index);
@@ -93,7 +93,7 @@ int size_network(network *net) {
 void *open_video_stream_from_link(const char *link) {
     /*
      Opens the video stream from a url or file name.
-     Used to fetch video frames in YoloObjectDetector::detect.
+     Used to fetch video frames in ObjectDetector::detect.
      */
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(link);

@@ -3,7 +3,7 @@
 // ==================
 
 #include <CentroidTracker.h>
-#include <YoloObjectDetector.h>
+#include <ObjectDetector.h>
 
 #ifndef RILEY_RILEY_H
 #define RILEY_RILEY_H
