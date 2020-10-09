@@ -23,7 +23,6 @@ int main(int argc, char** argv) {
             return 0;
         }
         if (strcmp(argv[1], "track") == 0) {
-
             detector.detect(true);
             return 0;
         }
