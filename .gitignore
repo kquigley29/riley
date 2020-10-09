@@ -8,8 +8,7 @@ cmake-build-debug
 build
 
 # darknet
-weights
-labels
+weights/*
 
 # binaries and executables
-./riley
+detector

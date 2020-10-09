@@ -16,7 +16,7 @@ else()
 endif()
 find_package(OpenCV REQUIRED)
 set(DARKNET_DIR ${CMAKE_SOURCE_DIR}/darknet)
-set(DARKNET_RILEY_DIR ${CMAKE_SOURCE_DIR}/darknet_riley)
+set(RILEY_DIR ${CMAKE_SOURCE_DIR}/riley)
 
 add_definitions(-DOPENCV)
 
@@ -25,17 +25,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY .)
 
 # Include all the include directories
 include_directories(
-        ${DARKNET_RILEY_DIR}/include
+        ${RILEY_DIR}/include
         ${DARKNET_DIR}/include
         ${DARKNET_DIR}/src)
 
 if (CUDA_FOUND)
-    link_directories(/usr/local/cua/lib64)
+    link_directories(/usr/local/cuda/lib64)
     # Add the darknet library
-    cuda_add_library(darknet_riley
-            ${DARKNET_RILEY_DIR}/src/ObjectDetector.cpp
-            ${DARKNET_RILEY_DIR}/src/CentroidTracker.cpp
-            ${DARKNET_RILEY_DIR}/src/RileyUtils.cpp
+    cuda_add_library(${PROJECT_NAME}_lib
+            ${RILEY_DIR}/src/ObjectDetector.cpp
+            ${RILEY_DIR}/src/CentroidTracker.cpp
+            ${RILEY_DIR}/src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c
             ${DARKNET_DIR}/src/activations.c             ${DARKNET_DIR}/src/image.c
@@ -66,7 +66,7 @@ if (CUDA_FOUND)
             ${DARKNET_DIR}/src/blas_kernels.cu           ${DARKNET_DIR}/src/dropout_layer_kernels.cu
             ${DARKNET_DIR}/src/col2im_kernels.cu         ${DARKNET_DIR}/src/im2col_kernels.cu
             ${DARKNET_DIR}/src/convolutional_kernels.cu  ${DARKNET_DIR}/src/maxpool_layer_kernels.cu)
-    target_link_libraries(darknet_riley
+    target_link_libraries(${PROJECT_NAME}_lib
             m
             pthread
             stdc++
@@ -78,11 +78,11 @@ if (CUDA_FOUND)
 
 else()
 
-    # Add the darknet_riley library
-    add_library(darknet_riley
-            ${DARKNET_RILEY_DIR}/src/ObjectDetector.cpp
-            ${DARKNET_RILEY_DIR}/src/CentroidTracker.cpp
-            ${DARKNET_RILEY_DIR}/src/RileyUtils.cpp
+    # Add the riley library
+    add_library(${PROJECT_NAME}_lib
+            ${RILEY_DIR}/src/ObjectDetector.cpp
+            ${RILEY_DIR}/src/CentroidTracker.cpp
+            ${RILEY_DIR}/src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c
             ${DARKNET_DIR}/src/activations.c             ${DARKNET_DIR}/src/image.c
@@ -107,7 +107,7 @@ else()
             ${DARKNET_DIR}/src/gru_layer.c               ${DARKNET_DIR}/src/utils.c
             ${DARKNET_DIR}/src/upsample_layer.c          ${DARKNET_DIR}/src/logistic_layer.c
             ${DARKNET_DIR}/src/l2norm_layer.c            ${DARKNET_DIR}/src/yolo_layer.c)
-    target_link_libraries(darknet_riley
+    target_link_libraries(${PROJECT_NAME}_lib
             m
             pthread
             stdc++
@@ -115,7 +115,11 @@ else()
 
 endif()
 
-add_executable(riley
-        ${DARKNET_RILEY_DIR}/src/Riley.cpp)
-target_link_libraries(riley
-        darknet_riley)
+add_executable(detector
+        ${RILEY_DIR}/src/riley.cpp)
+target_link_libraries(detector
+        ${PROJECT_NAME}_lib)
+
+set_target_properties(detector ${PROJECT_NAME}_lib
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
