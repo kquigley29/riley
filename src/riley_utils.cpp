@@ -3,6 +3,7 @@
 // =================
 
 
+#include <demo.h>
 #include "riley_utils.h"
 
 
@@ -79,39 +80,36 @@ int size_network(network *net) {
 }
 
 
-void *open_video_stream_from_camera(const int &index) {
+cv::VideoCapture *open_video_stream_from_camera(const int &index) {
     /*
      Opens the video stream from a camera.
-     Used to fetch video frames in ObjectDetector::fetch_in_thread.
      */
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(index);
     if (!cap->isOpened()) return nullptr;
-    else return (void *)cap;
+    else return cap;
 }
 
 
-void *open_video_stream_from_link(const char *link) {
+cv::VideoCapture *open_video_stream_from_link(const char *link) {
     /*
      Opens the video stream from a url or file name.
-     Used to fetch video frames in ObjectDetector::detect.
      */
     cv::VideoCapture *cap;
     cap = new cv::VideoCapture(link);
     if (!cap->isOpened()) return nullptr;
-    else return (void *)cap;
+    else return cap;
 }
 
 
-image retrieve_image_from_stream(void *p) {
+image retrieve_image_from_stream(cv::VideoCapture *vc) {
     /*
      Gets an image from the video stream.
      If the image is empty an empty image is returned from
          the darknet make_empty_image function
      */
-    auto *cap = (cv::VideoCapture *)p;
     cv::Mat m;
-    *cap >> m;
-    if(m.empty()) return make_empty_image(0,0,0);
+    *vc >> m;
+    if (m.empty()) return make_empty_image(0,0,0);
     return mat_to_image(m);
 }

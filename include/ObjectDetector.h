@@ -8,44 +8,47 @@
 #define RILEY_OBJECTDETECTOR_H
 
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <thread>
 #include <opencv2/opencv.hpp>
 #include <darknet.h>
-#include <demo.h>
 #include "CentroidTracker.h"
-#include "riley_utils.h"
 
 
 class ObjectDetector {
 public:
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &index, const int &tracker_limit=50);
+    explicit ObjectDetector() = default;
+    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &index=0, const int &tracker_limit=50);
     explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const char *video, const int &tracker_limit=50);
     virtual ~ObjectDetector();
 
-    void *detect(const bool &track=false);
+    void detect();
+    void display();
+
+    cv::Mat get_img() const;
+    detection *get_dets() const;
+    int get_nboxes() const;
+
+    void set_tracking(const bool &track);
+
+    void update_detect_thresh(const float &new_thresh);
 
 private:
-    cv::VideoCapture *get_cap(const int &index);
-    cv::VideoCapture *get_cap(const char *video);
+    void init(char *data_cfg, char *cfg, char *weights, const int &tracker_limit);
 
-    int detect_classes;
     char **detect_labels;
     image **detect_alphabet;
-
+    cv::VideoCapture *cap;
     network *net;
-    int detect_total;
-    int detect_frame = 3;
-    float *avg;
-    void *cap;
-    float **predictions;
     float detect_thresh = 0.5;
     float detect_hier = 0.5;
     float detect_nms = 0.45;
-
+    int nboxes = 0;
+    detection *dets;
+    layer l;
+    image im;
+    cv::Mat img;
+    bool track = false;
     CentroidTracker *tracker;
+
 };
 
 

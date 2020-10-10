@@ -8,28 +8,23 @@
 #define RILEY_CENTROIDTRACKER_H
 
 
-#include <iostream>
 #include <vector>
 #include <map>
-#include <cmath>
 #include <set>
-#include <algorithm>
-#include <thread>
 #include <darknet.h>
-#include "riley_utils.h"
 
 
 class CentroidTracker {
 public:
-    explicit CentroidTracker(int);
+    explicit CentroidTracker(const int &max_disappeared=50);
     ~CentroidTracker();
 
     void draw_trace(image &img);
-    std::vector<std::pair<int, std::pair<double, double>>> update(detection*, const int&);
+    std::vector<std::pair<int, std::pair<double, double>>> update(detection *dets, const int &num_dets);
 
 private:
-    void register_object(int, int);
-    void deregister_object(int);
+    void register_object(int cX, int cY);
+    void deregister_object(int object_id);
 
     std::vector<std::pair<int, std::pair<double, double>>> objects;
     std::map<int, std::vector<std::pair<double, double>>> path_keeper;

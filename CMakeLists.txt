@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project(riley)
 set(CMAKE_CXX_STANDARD 14)
 
+#add_definitions(-DDEBUG)
+
 FIND_PACKAGE(CUDA)
 if (CUDA_FOUND)
     find_package(CUDA REQUIRED)
@@ -14,18 +16,15 @@ if (CUDA_FOUND)
 else()
     list(APPEND LIBRARIES "m")
 endif()
+
 find_package(OpenCV REQUIRED)
 set(DARKNET_DIR ${CMAKE_SOURCE_DIR}/darknet)
-set(RILEY_DIR ${CMAKE_SOURCE_DIR}/riley)
 
 add_definitions(-DOPENCV)
 
-# Set all binaries to be placed in riley
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY .)
-
 # Include all the include directories
 include_directories(
-        ${RILEY_DIR}/include
+        include
         ${DARKNET_DIR}/include
         ${DARKNET_DIR}/src)
 
@@ -33,9 +32,9 @@ if (CUDA_FOUND)
     link_directories(/usr/local/cuda/lib64)
     # Add the darknet library
     cuda_add_library(${PROJECT_NAME}_lib
-            ${RILEY_DIR}/src/ObjectDetector.cpp
-            ${RILEY_DIR}/src/CentroidTracker.cpp
-            ${RILEY_DIR}/src/riley_utils.cpp
+            src/ObjectDetector.cpp
+            src/CentroidTracker.cpp
+            src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c
             ${DARKNET_DIR}/src/activations.c             ${DARKNET_DIR}/src/image.c
@@ -80,9 +79,9 @@ else()
 
     # Add the riley library
     add_library(${PROJECT_NAME}_lib
-            ${RILEY_DIR}/src/ObjectDetector.cpp
-            ${RILEY_DIR}/src/CentroidTracker.cpp
-            ${RILEY_DIR}/src/riley_utils.cpp
+            src/ObjectDetector.cpp
+            src/CentroidTracker.cpp
+            src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c
             ${DARKNET_DIR}/src/activations.c             ${DARKNET_DIR}/src/image.c
@@ -116,7 +115,7 @@ else()
 endif()
 
 add_executable(detector
-        ${RILEY_DIR}/src/riley.cpp)
+        src/riley.cpp)
 target_link_libraries(detector
         ${PROJECT_NAME}_lib)
 

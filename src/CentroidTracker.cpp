@@ -4,10 +4,15 @@
 // ======================
 
 
+#include <iostream>
 #include "CentroidTracker.h"
+#include "riley_utils.h"
 
 
-CentroidTracker::CentroidTracker(int max_disappeared) {
+CentroidTracker::CentroidTracker(const int &max_disappeared)
+: next_object_id(0)
+, max_disappeared(max_disappeared)
+{
     /*
      CentroidTracker tracks object centroids passed it as darknet detections.
      The objects are tracked by recording the path taken by each objects. An
@@ -18,10 +23,6 @@ CentroidTracker::CentroidTracker(int max_disappeared) {
      Objects are forgotten once they have been out of sight for longer than
           a consecutive number of frames given by max_disappeared.
      */
-    std::cout << "Onwards and upwards.";
-
-    this->next_object_id = 0;
-    this->max_disappeared = max_disappeared;
 }
 
 
@@ -53,7 +54,9 @@ void CentroidTracker::deregister_object(int object_id) {
     /*
      Deregister a lost centroid from object tracking.
      */
+#ifdef DEBUG
     std::cout << "Deregistered object: " << object_id << "\n";
+#endif
     if (!this->objects.empty()) {
         for (int i = 0; i < this->objects.size(); i++) {
             if (this->objects[i].first == object_id) {
@@ -107,7 +110,9 @@ std::vector<std::pair<int, std::pair<double, double>>> CentroidTracker::update(d
          disappeared from view.
      Records the path of all objects being tracked.
      */
+#ifdef DEBUG
     std::cout << "Number of detections: " << num_dets << "\n";
+#endif
 
     if (num_dets == 0) {
         if (!this->disappeared.empty()) {
@@ -225,12 +230,15 @@ std::vector<std::pair<int, std::pair<double, double>>> CentroidTracker::update(d
                     this->deregister_object(object_id);
                 }
             }
-        } else {
+        }
+
+        else {
             for (auto col: unused_cols) {
                 this->register_object(input_centroids[col].first, input_centroids[col].second);
             }
         }
     }
+
     if (!objects.empty()) {
         for (auto obj: objects) {
 
@@ -240,6 +248,7 @@ std::vector<std::pair<int, std::pair<double, double>>> CentroidTracker::update(d
             path_keeper[obj.first].push_back(std::make_pair(obj.second.first, obj.second.second));
         }
     }
+
     return this->objects;
 }
 
