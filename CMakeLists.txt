@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 14)
 
 #add_definitions(-DDEBUG)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 FIND_PACKAGE(CUDA)
 if (CUDA_FOUND)
     find_package(CUDA REQUIRED)
@@ -31,7 +35,7 @@ include_directories(
 if (CUDA_FOUND)
     link_directories(/usr/local/cuda/lib64)
     # Add the darknet library
-    cuda_add_library(${PROJECT_NAME}_lib
+    cuda_add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
             src/CentroidTracker.cpp
             src/riley_utils.cpp
@@ -65,7 +69,7 @@ if (CUDA_FOUND)
             ${DARKNET_DIR}/src/blas_kernels.cu           ${DARKNET_DIR}/src/dropout_layer_kernels.cu
             ${DARKNET_DIR}/src/col2im_kernels.cu         ${DARKNET_DIR}/src/im2col_kernels.cu
             ${DARKNET_DIR}/src/convolutional_kernels.cu  ${DARKNET_DIR}/src/maxpool_layer_kernels.cu)
-    target_link_libraries(${PROJECT_NAME}_lib
+    target_link_libraries(${PROJECT_NAME}
             m
             pthread
             stdc++
@@ -78,7 +82,7 @@ if (CUDA_FOUND)
 else()
 
     # Add the riley library
-    add_library(${PROJECT_NAME}_lib
+    add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
             src/CentroidTracker.cpp
             src/riley_utils.cpp
@@ -93,7 +97,7 @@ else()
             ${DARKNET_DIR}/src/connected_layer.c         ${DARKNET_DIR}/src/maxpool_layer.c
             ${DARKNET_DIR}/src/convolutional_layer.c     ${DARKNET_DIR}/src/network.c
             ${DARKNET_DIR}/src/cost_layer.c              ${DARKNET_DIR}/src/normalization_layer.c
-            ${DARKNET_DIR}/src/image_opencv.cpp	      ${DARKNET_DIR}/src/iseg_layer.c
+            ${DARKNET_DIR}/src/image_opencv.cpp	         ${DARKNET_DIR}/src/iseg_layer.c
             ${DARKNET_DIR}/src/crnn_layer.c              ${DARKNET_DIR}/src/option_list.c
             ${DARKNET_DIR}/src/crop_layer.c              ${DARKNET_DIR}/src/parser.c
             ${DARKNET_DIR}/src/cuda.c                    ${DARKNET_DIR}/src/region_layer.c
@@ -117,8 +121,4 @@ endif()
 add_executable(detector
         src/riley.cpp)
 target_link_libraries(detector
-        ${PROJECT_NAME}_lib)
-
-set_target_properties(detector ${PROJECT_NAME}_lib
-        PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+        ${PROJECT_NAME})

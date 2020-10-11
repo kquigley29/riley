@@ -7,8 +7,10 @@
 cmake-build-debug
 build
 
+
 # darknet
 *.weights
 
-# binaries and executables
+# binaries, executables and libraries
 detector
+lib
