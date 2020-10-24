@@ -22,7 +22,7 @@ else()
 endif()
 
 find_package(OpenCV REQUIRED)
-set(DARKNET_DIR ${CMAKE_SOURCE_DIR}/darknet)
+set(DARKNET_DIR $ENV{DARKNET})
 
 add_definitions(-DOPENCV)
 
