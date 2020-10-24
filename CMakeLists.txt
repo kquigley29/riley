@@ -21,20 +21,20 @@ else()
     list(APPEND LIBRARIES "m")
 endif()
 
-find_package(OpenCV REQUIRED)
 set(DARKNET_DIR $ENV{DARKNET})
+add_compile_definitions(DARKNET="$ENV{DARKNET}")
 
+find_package(OpenCV REQUIRED)
 add_definitions(-DOPENCV)
 
-# Include all the include directories
 include_directories(
         include
         ${DARKNET_DIR}/include
-        ${DARKNET_DIR}/src)
+        ${DARKNET_DIR}/src
+)
 
 if (CUDA_FOUND)
     link_directories(/usr/local/cuda/lib64)
-    # Add the darknet library
     cuda_add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
             src/CentroidTracker.cpp
@@ -81,7 +81,6 @@ if (CUDA_FOUND)
 
 else()
 
-    # Add the riley library
     add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
             src/CentroidTracker.cpp
@@ -110,7 +109,7 @@ else()
             ${DARKNET_DIR}/src/gru_layer.c               ${DARKNET_DIR}/src/utils.c
             ${DARKNET_DIR}/src/upsample_layer.c          ${DARKNET_DIR}/src/logistic_layer.c
             ${DARKNET_DIR}/src/l2norm_layer.c            ${DARKNET_DIR}/src/yolo_layer.c)
-    target_link_libraries(${PROJECT_NAME}_lib
+    target_link_libraries(${PROJECT_NAME}
             m
             pthread
             stdc++
@@ -118,7 +117,8 @@ else()
 
 endif()
 
-add_executable(detector
-        src/riley.cpp)
-target_link_libraries(detector
-        ${PROJECT_NAME})
+#add_executable(detector
+#        src/riley.cpp)
+
+#target_link_libraries(detector
+#        ${PROJECT_NAME})
