@@ -112,6 +112,11 @@ int ObjectDetector::get_nboxes() const {
 }
 
 
+void ObjectDetector::set_img(const cv::Mat &image) {
+    this->img = image;
+}
+
+
 void ObjectDetector::set_tracking(const bool &track) {
     this->track = track;
 }

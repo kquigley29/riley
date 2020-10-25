@@ -28,6 +28,7 @@ public:
     detection *get_dets() const;
     int get_nboxes() const;
 
+    void set_img(const cv::Mat &image);
     void set_tracking(const bool &track);
 
     void update_detect_thresh(const float &new_thresh);
