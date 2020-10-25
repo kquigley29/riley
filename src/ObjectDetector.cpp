@@ -87,6 +87,31 @@ void ObjectDetector::detect() {
 }
 
 
+void ObjectDetector::detect(cv::Mat img) {
+    this->im = mat_to_image(img);
+    image sized_im = letterbox_image(this->im, this->net->w, this->net->h);
+
+    float *X = sized_im.data;
+    network_predict(this->net, X);
+    this->nboxes = 0;
+    this->dets = get_network_boxes(this->net, this->im.w, this->im.h, this->detect_thresh, this->detect_hier, 0, 1, &this->nboxes);
+    if (this->detect_nms != 0) do_nms_sort(this->dets, this->nboxes, this->l.classes, this->detect_nms);
+    draw_detections(this->im, this->dets, this->nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, l.classes);
+
+    if (this->track) {
+        this->tracker->draw_trace(this->im);
+        this->tracker->update(this->dets, this->nboxes);
+    }
+
+    free_detections(this->dets, nboxes);
+
+    cv::Mat mat = image_to_mat(this->im);
+    free_image(this->im);
+    free_image(sized_im);
+    this->img = mat;
+}
+
+
 void ObjectDetector::display() {
     while (true) {
         this->detect();

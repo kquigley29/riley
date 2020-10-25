@@ -22,6 +22,7 @@ public:
     virtual ~ObjectDetector();
 
     void detect();
+    void detect(cv::Mat image);
     void display();
 
     cv::Mat get_img() const;
@@ -34,8 +35,6 @@ public:
     void update_detect_thresh(const float &new_thresh);
 
 private:
-    void init(char *data_cfg, char *cfg, char *weights, const int &tracker_limit);
-
     char **detect_labels;
     image **detect_alphabet;
     cv::VideoCapture *cap;
@@ -50,7 +49,6 @@ private:
     cv::Mat img;
     bool track = false;
     CentroidTracker *tracker;
-
 };
 
 
