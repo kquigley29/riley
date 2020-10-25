@@ -9,10 +9,18 @@
 #include "riley_utils.h"
 
 
-void ObjectDetector::init(char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
+ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
 {
     /*
-     * Used in the constructors to initialise members.
+     * ObjectDetector uses darknet to detect objects in a video.
+     * data_cfg is the config file containing the location of the class
+         names list file, numbers of classes and other info.
+     * cfg is the network configuration file specifying the network
+         architecture.
+     * weights is the weights file for the network.
+
+     * This constructor sets up the darknet network and prepares the
+         network to make detections of the specified classes.
      */
     this->net = load_network(cfg, weights, 0);
     this->detect_alphabet = load_alphabet();
@@ -25,40 +33,26 @@ void ObjectDetector::init(char *data_cfg, char *cfg, char *weights, const int &t
 }
 
 
-ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &index, const int &tracker_limit) {
+ObjectDetector::ObjectDetector(const int &index, char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
+: ObjectDetector(data_cfg, cfg, weights, tracker_limit)
+{
     /*
-     * ObjectDetector uses darknet to detect objects in a video.
-     * data_cfg is the config file containing the location of the class
-         names list file, numbers of classes and other info.
-     * cfg is the network configuration file specifying the network
-         architecture.
-     * weights is the weights file for the network.
-
-     * This constructor sets up the darknet network and prepares the
-         network to make detections of the specified classes.
+     * A VideoCapture is set up in this constructor.
+     * The video stream is taken from a camera.
      */
-    this->init(data_cfg, cfg, weights, tracker_limit);
-
     std::cout << "Opening video stream...\n";
     this->cap = open_video_stream_from_camera(index);
     if (!this->cap) error("Couldn't connect to video source.\n");
 }
 
 
-ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const char *video, const int &tracker_limit) {
+ObjectDetector::ObjectDetector(const char *video, char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
+: ObjectDetector(data_cfg, cfg, weights, tracker_limit)
+{
     /*
-     * ObjectDetector uses darknet to detect objects in a video.
-     * data_cfg is the config file containing the location of the class
-         names list file, numbers of classes and other info.
-     * cfg is the network configuration file specifying the network
-         architecture.
-     * weights is the weights file for the network.
-
-     * This constructor sets up the darknet network and prepares the
-         network to make detections of the specified classes.
+     * A VideoCapture is set up in this constructor.
+     * The video stream is taken from a video url.
      */
-    this->init(data_cfg, cfg, weights, tracker_limit);
-
     std::cout << "Opening video stream...\n";
     this->cap = open_video_stream_from_link(video);
     if (!this->cap) error("Couldn't connect to video source.\n");

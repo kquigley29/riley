@@ -16,8 +16,9 @@
 class ObjectDetector {
 public:
     explicit ObjectDetector() = default;
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &index=0, const int &tracker_limit=50);
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const char *video, const int &tracker_limit=50);
+    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
+    explicit ObjectDetector(const int &index, char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
+    explicit ObjectDetector(const char *video,char *data_cfg, char *cfg, char *weights,  const int &tracker_limit=50);
     virtual ~ObjectDetector();
 
     void detect();
