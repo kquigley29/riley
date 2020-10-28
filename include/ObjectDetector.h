@@ -1,21 +1,14 @@
-// =========================
-// ObjectDetector Header
-// Detect objects. Fast
-// =========================
-
-
 #ifndef RILEY_OBJECTDETECTOR_H
 #define RILEY_OBJECTDETECTOR_H
 
 
 #include <opencv2/opencv.hpp>
 #include <darknet.h>
-#include "CentroidTracker.h"
 
 
 class ObjectDetector {
 public:
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const unsigned int tracker_limit=50);
+    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights);
     virtual ~ObjectDetector();
 
     cv::Mat detect(const cv::Mat &img);
@@ -25,7 +18,6 @@ public:
     detection *get_dets() const;
     int get_nboxes() const;
 
-    void set_tracking(const bool &track);
     void set_thresh(const float &new_thresh);
 
 private:
@@ -38,8 +30,6 @@ private:
     int nboxes = 0;
     detection *dets;
     layer l;
-    bool track = false;
-    CentroidTracker *tracker;
 };
 
 

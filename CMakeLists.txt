@@ -37,7 +37,6 @@ if (CUDA_FOUND)
     link_directories(/usr/local/cuda/lib64)
     cuda_add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
-            src/CentroidTracker.cpp
             src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c
@@ -83,7 +82,6 @@ else()
 
     add_library(${PROJECT_NAME}
             src/ObjectDetector.cpp
-            src/CentroidTracker.cpp
             src/riley_utils.cpp
 
             ${DARKNET_DIR}/src/activation_layer.c        ${DARKNET_DIR}/src/im2col.c

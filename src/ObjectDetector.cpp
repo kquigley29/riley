@@ -8,7 +8,7 @@
 #include "riley_utils.h"
 
 
-ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const unsigned int tracker_limit)
+ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights)
 {
     /*
      * ObjectDetector uses darknet to detect objects in a video.
@@ -28,7 +28,6 @@ ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const u
     this->detect_labels = get_labels(label_list);
     set_batch_network(this->net, 1);
     this->l = this->net->layers[this->net->n - 1];
-    this->tracker = new CentroidTracker(tracker_limit);
 }
 
 cv::Mat ObjectDetector::detect(const cv::Mat &img) {
@@ -41,11 +40,6 @@ cv::Mat ObjectDetector::detect(const cv::Mat &img) {
     this->dets = get_network_boxes(this->net, im.w, im.h, this->detect_thresh, this->detect_hier, nullptr, 1, &this->nboxes);
     if (this->detect_nms != 0) do_nms_sort(this->dets, this->nboxes, this->l.classes, this->detect_nms);
     draw_detections(im, this->dets, this->nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, l.classes);
-
-    if (this->track) {
-        this->tracker->draw_trace(im);
-        this->tracker->update(this->dets, this->nboxes);
-    }
 
     free_detections(this->dets, nboxes);
 
@@ -79,11 +73,6 @@ detection *ObjectDetector::get_dets() const {
 
 int ObjectDetector::get_nboxes() const {
     return this->nboxes;
-}
-
-
-void ObjectDetector::set_tracking(const bool &tracking) {
-    this->track = tracking;
 }
 
 
