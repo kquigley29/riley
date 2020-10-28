@@ -12,5 +12,5 @@ build
 *.weights
 
 # binaries, executables and libraries
-detector
+demo
 lib

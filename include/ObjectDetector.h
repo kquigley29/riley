@@ -15,29 +15,22 @@
 
 class ObjectDetector {
 public:
-    explicit ObjectDetector() = default;
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
-    explicit ObjectDetector(const int &index, char *data_cfg, char *cfg, char *weights, const int &tracker_limit=50);
-    explicit ObjectDetector(const char *video,char *data_cfg, char *cfg, char *weights,  const int &tracker_limit=50);
+    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights, const unsigned int tracker_limit=50);
     virtual ~ObjectDetector();
 
-    void detect();
-    void detect(cv::Mat image);
-    void display();
+    cv::Mat detect(const cv::Mat &img);
+    void detect_from_cap(cv::VideoCapture &cap);
+    static void display(const cv::Mat &img);
 
-    cv::Mat get_img() const;
     detection *get_dets() const;
     int get_nboxes() const;
 
-    void set_img(const cv::Mat &image);
     void set_tracking(const bool &track);
-
-    void update_detect_thresh(const float &new_thresh);
+    void set_thresh(const float &new_thresh);
 
 private:
     char **detect_labels;
     image **detect_alphabet;
-    cv::VideoCapture *cap;
     network *net;
     float detect_thresh = 0.5;
     float detect_hier = 0.5;
@@ -45,8 +38,6 @@ private:
     int nboxes = 0;
     detection *dets;
     layer l;
-    image im;
-    cv::Mat img;
     bool track = false;
     CentroidTracker *tracker;
 };

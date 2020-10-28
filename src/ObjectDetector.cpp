@@ -4,12 +4,11 @@
 // =========================
 
 
-#include <iostream>
 #include "ObjectDetector.h"
 #include "riley_utils.h"
 
 
-ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
+ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const unsigned int tracker_limit)
 {
     /*
      * ObjectDetector uses darknet to detect objects in a video.
@@ -32,98 +31,44 @@ ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights, const i
     this->tracker = new CentroidTracker(tracker_limit);
 }
 
-
-ObjectDetector::ObjectDetector(const int &index, char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
-: ObjectDetector(data_cfg, cfg, weights, tracker_limit)
-{
-    /*
-     * A VideoCapture is set up in this constructor.
-     * The video stream is taken from a camera.
-     */
-    std::cout << "Opening video stream...\n";
-    this->cap = open_video_stream_from_camera(index);
-    if (!this->cap) error("Couldn't connect to video source.\n");
-}
-
-
-ObjectDetector::ObjectDetector(const char *video, char *data_cfg, char *cfg, char *weights, const int &tracker_limit)
-: ObjectDetector(data_cfg, cfg, weights, tracker_limit)
-{
-    /*
-     * A VideoCapture is set up in this constructor.
-     * The video stream is taken from a video url.
-     */
-    std::cout << "Opening video stream...\n";
-    this->cap = open_video_stream_from_link(video);
-    if (!this->cap) error("Couldn't connect to video source.\n");
-}
-
-
-void ObjectDetector::detect() {
-    /*
-     Detects objects in images from this->cap.
-     */
-    this->im = retrieve_image_from_stream(this->cap);
-    image sized_im = letterbox_image(this->im, this->net->w, this->net->h);
+cv::Mat ObjectDetector::detect(const cv::Mat &img) {
+    image im = mat_to_image(img);
+    image sized_im = letterbox_image(im, this->net->w, this->net->h);
 
     float *X = sized_im.data;
     network_predict(this->net, X);
     this->nboxes = 0;
-    this->dets = get_network_boxes(this->net, this->im.w, this->im.h, this->detect_thresh, this->detect_hier, 0, 1, &this->nboxes);
+    this->dets = get_network_boxes(this->net, im.w, im.h, this->detect_thresh, this->detect_hier, nullptr, 1, &this->nboxes);
     if (this->detect_nms != 0) do_nms_sort(this->dets, this->nboxes, this->l.classes, this->detect_nms);
-    draw_detections(this->im, this->dets, this->nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, l.classes);
+    draw_detections(im, this->dets, this->nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, l.classes);
 
     if (this->track) {
-        this->tracker->draw_trace(this->im);
+        this->tracker->draw_trace(im);
         this->tracker->update(this->dets, this->nboxes);
     }
 
     free_detections(this->dets, nboxes);
 
-    cv::Mat mat = image_to_mat(this->im);
-    free_image(this->im);
+    cv::Mat mat = image_to_mat(im);
+    free_image(im);
     free_image(sized_im);
-    this->img = mat;
+
+    return mat;
 }
 
 
-void ObjectDetector::detect(cv::Mat img) {
-    this->im = mat_to_image(img);
-    image sized_im = letterbox_image(this->im, this->net->w, this->net->h);
-
-    float *X = sized_im.data;
-    network_predict(this->net, X);
-    this->nboxes = 0;
-    this->dets = get_network_boxes(this->net, this->im.w, this->im.h, this->detect_thresh, this->detect_hier, 0, 1, &this->nboxes);
-    if (this->detect_nms != 0) do_nms_sort(this->dets, this->nboxes, this->l.classes, this->detect_nms);
-    draw_detections(this->im, this->dets, this->nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, l.classes);
-
-    if (this->track) {
-        this->tracker->draw_trace(this->im);
-        this->tracker->update(this->dets, this->nboxes);
-    }
-
-    free_detections(this->dets, nboxes);
-
-    cv::Mat mat = image_to_mat(this->im);
-    free_image(this->im);
-    free_image(sized_im);
-    this->img = mat;
-}
-
-
-void ObjectDetector::display() {
-    while (true) {
-        this->detect();
-        cv::imshow("detection", this->img);
-        if (cv::waitKey(1) == 27) break;
+void ObjectDetector::detect_from_cap(cv::VideoCapture &cap) {
+    cv::Mat mat;
+    while (cap.read(mat)) {
+        cv::Mat detected_img = this->detect(mat);
+        ObjectDetector::display(detected_img);
     }
 }
 
 
-cv::Mat ObjectDetector::get_img() const {
-    if (!this->img.empty()) return this->img;
-    return cv::Mat();
+void ObjectDetector::display(const cv::Mat &img) {
+    cv::imshow("detection", img);
+    cv::waitKey(1);
 }
 
 
@@ -137,17 +82,12 @@ int ObjectDetector::get_nboxes() const {
 }
 
 
-void ObjectDetector::set_img(const cv::Mat &image) {
-    this->img = image;
+void ObjectDetector::set_tracking(const bool &tracking) {
+    this->track = tracking;
 }
 
 
-void ObjectDetector::set_tracking(const bool &track) {
-    this->track = track;
-}
-
-
-void ObjectDetector::update_detect_thresh(const float &new_thresh) {
+void ObjectDetector::set_thresh(const float &new_thresh) {
     this->detect_thresh = new_thresh;
 }
 

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(riley)
 set(CMAKE_CXX_STANDARD 14)
 
-#add_definitions(-DDEBUG)
+add_definitions(-DRILEY_DEBUG)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
@@ -117,8 +117,10 @@ else()
 
 endif()
 
-#add_executable(detector
-#        src/riley.cpp)
+add_executable(demo
+        src/demo.cpp
+        )
 
-#target_link_libraries(detector
-#        ${PROJECT_NAME})
+target_link_libraries(demo
+        ${PROJECT_NAME}
+        )
