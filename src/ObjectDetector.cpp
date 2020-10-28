@@ -4,8 +4,8 @@
 // =========================
 
 
-#include "ObjectDetector.h"
-#include "riley_utils.h"
+#include "riley/ObjectDetector.h"
+#include "riley/riley_utils.h"
 
 
 ObjectDetector::ObjectDetector(char *data_cfg, char *cfg, char *weights)

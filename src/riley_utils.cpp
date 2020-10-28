@@ -1,5 +1,5 @@
 #include <darknet.h>
-#include "riley_utils.h"
+#include "riley/riley_utils.h"
 
 
 cv::Mat image_to_mat(const image &img) {

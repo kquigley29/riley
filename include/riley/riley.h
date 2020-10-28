@@ -7,7 +7,6 @@
 #define RILEY_RILEY_H
 
 
-#include "CentroidTracker.h"
 #include "ObjectDetector.h"
 
 
