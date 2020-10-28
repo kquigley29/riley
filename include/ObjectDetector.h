@@ -8,6 +8,7 @@
 
 class ObjectDetector {
 public:
+    explicit ObjectDetector() = default;
     explicit ObjectDetector(char *data_cfg, char *cfg, char *weights);
     virtual ~ObjectDetector();
 
