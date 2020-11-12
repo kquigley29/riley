@@ -1,34 +1,23 @@
-// ===============
-// == R I L E Y ==
-// ===============
-
-
 #include "riley/riley.h"
 
 
-void help() {
+using namespace riley;
+
+
+void print_help() {
     std::cout << "[Usage]\n"
-              << "[1] ./demo yolo\n"
-              << "[2] ./demo track\n";
+              << "./demo yolo\n";
 }
 
 
-int main(int argc, char** argv) {
-    bool yolo = strcmp(argv[1], "yolo") == 0;
-    bool track = strcmp(argv[1], "track") == 0;
-
-    if (!(yolo && track && argc == 2)){
-        char data_cfg_default[] = "cfg/coco.data";
-        char cfg_default[] = "cfg/riley.cfg";
-        char weights_default[] = "weights/yolov3.weights";
-
-        cv::VideoCapture cap(0);
-        ObjectDetector detector(data_cfg_default, cfg_default, weights_default);
-        detector.set_tracking(track);
-        detector.detect_from_cap(cap);
-
+int main(int argc, char** argv)
+{
+    if (argc == 2 && strcmp(argv[1], "yolo") == 0)
+    {
+        ObjectDetector detector;
+        detector.detect_stream();
         return 0;
     }
-    help();
+    print_help();
     return 1;
 }
