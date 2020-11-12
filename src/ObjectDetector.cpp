@@ -23,8 +23,8 @@ namespace riley
     }
 
 
-    ObjectDetector::ObjectDetector(char *cfg, char *names, char *weights, const float &thresh, const bool &from_darknet)
-    : detect_thresh(thresh)
+    ObjectDetector::ObjectDetector(char *cfg, char *names, char *weights, const bool &from_darknet)
+    : detect_thresh(0.5)
     , detect_hier(0.5)
     , detect_nms(0.45)
     {

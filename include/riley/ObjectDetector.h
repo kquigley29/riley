@@ -12,8 +12,7 @@ namespace riley
     public:
         explicit ObjectDetector();
 
-        explicit ObjectDetector(char *cfg, char *names, char *weights, const float &thresh = 0.5,
-                                const bool &from_darknet = false);
+        explicit ObjectDetector(char *cfg, char *names, char *weights, const bool &from_darknet = false);
 
         void detect(const cv::Mat &input_image, cv::Mat &output_image);
 
