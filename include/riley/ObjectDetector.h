@@ -5,33 +5,34 @@
 #include <opencv2/opencv.hpp>
 #include <darknet.h>
 
+namespace riley
+{
 
-class ObjectDetector {
-public:
-    explicit ObjectDetector() = default;
-    explicit ObjectDetector(char *data_cfg, char *cfg, char *weights);
-    virtual ~ObjectDetector();
+    class ObjectDetector {
+    public:
+        explicit ObjectDetector();
 
-    cv::Mat detect(const cv::Mat &img);
-    void detect_from_cap(cv::VideoCapture &cap);
-    static void display(const cv::Mat &img);
+        explicit ObjectDetector(char *cfg, char *names, char *weights, const float &thresh = 0.5,
+                                const bool &from_darknet = false);
 
-    detection *get_dets() const;
-    int get_nboxes() const;
+        void detect(const cv::Mat &input_image, cv::Mat &output_image);
 
-    void set_thresh(const float &new_thresh);
+        void detect_stream();
 
-private:
-    char **detect_labels;
-    image **detect_alphabet;
-    network *net;
-    float detect_thresh = 0.5;
-    float detect_hier = 0.5;
-    float detect_nms = 0.45;
-    int nboxes = 0;
-    detection *dets;
-    layer l;
-};
+        void set_thresh(const float &new_thresh);
+
+    private:
+        char **detect_labels;
+        image **detect_alphabet;
+        network *net;
+        float detect_thresh;
+        float detect_hier;
+        float detect_nms;
+        layer l;
+    };
+
+}
 
 
 #endif //RILEY_OBJECTDETECTOR_H
+
