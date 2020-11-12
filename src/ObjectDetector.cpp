@@ -12,9 +12,9 @@ namespace riley
     , detect_hier(0.5)
     , detect_nms(0.45)
     {
-        char *cfg = append_darknet("/cfg/yolov3-keane.cfg");
-        char *weights = append_darknet("/weights/yolov3.weights");
-        char *labels = append_darknet("/data/coco.names");
+        char *cfg = append_darknet("cfg/yolov3-keane.cfg");
+        char *weights = append_darknet("yolov3.weights");
+        char *labels = append_darknet("data/coco.names");
         this->net = load_network(cfg, weights, 0);
         this->detect_alphabet = load_alphabet();
         this->detect_labels = get_labels(labels);

@@ -73,7 +73,7 @@ namespace riley
      */
     char *append_darknet(char *filename)
     {
-        return str_to_char_array(std::string(DARKNET) + std::string(filename));
+        return str_to_char_array(std::string(DARKNET) + std::string("/") + std::string(filename));
     }
 
 }
