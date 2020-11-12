@@ -1,30 +1,36 @@
 # Riley
-A C++ YOLOv3 object detector library with centroid tracking.
+A C++ object detector library with Darknet
 
 ## Purpose
-I created this repository as a general objects detection library to use in other projects. 
-The use cases for this are vast and therfore I woud like to make this projects as general as possible.
+I created this repository as a general object detection library to use in other projects. 
+The use cases for this are vast and therefore I would like to make this projects as general as possible.
 
-## Build
-To build make a build directory make sure you are currently in the riley main directory and run
+## Use
+You will have to make sure that you have compiled Darknet with a shared object library.  
+It is also important to set a `DARKNET` environment variable by executing
+```bash
+export DARKNET=<path to your Darknet directory>
+```
+or you can simply add this to your `.bashrc` file to avoid repetition.  
+Similarly add the Darknet path to `LD_LIBRARY_PATH` environment variable by executing
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DARKNET
+```
+again you can put this i the `.bashrc` to avoid repetition.  
+
+You can include this in projects by adding it as a subdirectory and inserting
+```cmake
+add_subdirectory(${CMAKE_SOURCE_DIR}/riley)
+target_link_libraries(<target name> riley)
+```
+into the `CMakeLists.txt` file.
+
+## Demo
+If you want to see a demo, run the following from the riley directory after completing the first two steps from above:
 ```bash
 mkdir build
-cd build
-cmake ..
+cd build 
+cmake -DDEMO=ON
 make
-cd ..
-```
-The libraries and example executable should be in the main directory.
-
-## Run 
-The example code is a small demonstration of what the code does.  
-You will need to have installed the YOLOv3 weights in the weights directory. This can be done by using the commands in weights/get_weights.txt.  
-Run the following in your terminal to see it in action:
-```bash
-./detector yolo
-```
-This starts the objects detection without tracking on images received from the default camera and with the default configuration files and weights.
-Simply run the following to see other input methods:
-```bash
-./detector -h
+./demo yolo
 ```
