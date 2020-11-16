@@ -5,6 +5,7 @@
 #include <opencv2/opencv.hpp>
 #include <darknet.h>
 
+
 namespace riley
 {
 
@@ -14,7 +15,7 @@ namespace riley
 
         explicit ObjectDetector(char *cfg, char *names, char *weights, const bool &from_darknet = false);
 
-        void detect(const cv::Mat &input_image, cv::Mat &output_image);
+        std::pair<detection*, int> detect(const cv::Mat &input_image, cv::Mat &output_image);
 
         void detect_stream();
 

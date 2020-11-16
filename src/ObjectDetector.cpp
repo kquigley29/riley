@@ -44,7 +44,7 @@ namespace riley
     }
 
 
-    void ObjectDetector::detect(const cv::Mat &input_image, cv::Mat &output_image)
+    std::pair<detection*, int> ObjectDetector::detect(const cv::Mat &input_image, cv::Mat &output_image)
     {
         image img = mat_to_image(input_image);
         image sized_img = letterbox_image(img, this->net->w, this->net->h);
@@ -52,11 +52,13 @@ namespace riley
         float *X = sized_img.data;
         network_predict(*this->net, X);
         int nboxes = 0;
-        detection* dets = get_network_boxes(this->net, img.w, img.h, this->detect_thresh, this->detect_hier, nullptr, 1, &nboxes, 0);
+        detection *dets = get_network_boxes(this->net, img.w, img.h, this->detect_thresh, this->detect_hier, nullptr, 1, &nboxes, 0);
         if (this->detect_nms != 0) do_nms_sort(dets, nboxes, this->l.classes, this->detect_nms);
         draw_detections_v3(img, dets, nboxes, this->detect_thresh, this->detect_labels, this->detect_alphabet, this->l.classes, 0);
 
         output_image = image_to_mat(img);
+
+        return {dets, nboxes};
     }
 
 
@@ -68,7 +70,8 @@ namespace riley
         while (cap.read(mat) && key != 27)
         {
             cv::Mat detected_img;
-            this->detect(mat, detected_img);
+            std::pair<detection*, int> dets_nboxes;
+            dets_nboxes = this->detect(mat, detected_img);
             cv::imshow("detection", detected_img);
             key = cv::waitKey(1);
         }
