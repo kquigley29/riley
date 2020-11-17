@@ -16,9 +16,9 @@ Similarly add the Darknet path to `LD_LIBRARY_PATH` environment variable by exec
 ```bash
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DARKNET
 ```
-again you can put this i the `.bashrc` to avoid repetition.  
+again you can put this in the `.bashrc` to avoid repetition.  
 
-You can include this in projects by adding it as a subdirectory and inserting
+You can include `riley` in projects by adding it as a subdirectory and inserting
 ```cmake
 add_subdirectory(${CMAKE_SOURCE_DIR}/riley)
 target_link_libraries(<target name> riley)
