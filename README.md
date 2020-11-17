@@ -30,7 +30,7 @@ If you want to see a demo, run the following from the riley directory after comp
 ```bash
 mkdir build
 cd build 
-cmake -DDEMO=ON
+cmake .. -DDEMO=ON
 make
 ./demo yolo
 ```
