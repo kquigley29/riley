@@ -1,10 +1,6 @@
 # Riley
 A C++ object detector library with Darknet
 
-## Purpose
-I created this repository as a general object detection library to use in other projects. 
-The use cases for this are vast and therefore I would like to make this projects as general as possible.
-
 ## Use
 You will have to make sure that you have compiled Darknet with a shared object library.  
 It is also important to set a `DARKNET` environment variable by executing
