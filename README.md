@@ -14,13 +14,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DARKNET
 ```
 again you can put this in the `.bashrc` to avoid repetition.  
 
-You can include `riley` in projects by adding it as a subdirectory and inserting
-```cmake
-add_subdirectory(${CMAKE_SOURCE_DIR}/riley)
-target_link_libraries(<target name> riley)
-```
-into the `CMakeLists.txt` file.
-
 ## Demo
 If you want to see a demo, run the following from the riley directory after completing the first two steps from above:
 ```bash
